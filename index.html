@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Temporal — Portland-based collective</title>
+  <meta name="description" content="Temporal is a Portland-based collective throwing vibrant, love-soaked parties with kindred spirits. Join our list to get invited to future events." />
+  <meta property="og:title" content="Temporal — Portland-based collective" />
+  <meta property="og:description" content="Vibrant parties. Deep, driving, and soulful sounds. Join our list to get invited." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="Logo.jpeg" />
+  <meta name="theme-color" content="#0E131E" />
+
+  <style>
+    /* Brand palette (from guideline) */
+    :root {
+      --night: #0E131E;
+      --stone: #EDE5CF;
+      --lavender: #C2B5E9;
+      --terracotta: #B55437;
+      --ocher: #D08639;
+      --grass: #5C5C21;
+      --dark-earth: #604331;
+      --light-earth: #BB957E;
+    }
+
+    /* Base reset */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--night);
+      color: var(--stone);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .wrap {
+      min-height: 100dvh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .container {
+      width: min(960px, 92vw);
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0 8px;
+      border-bottom: 1px solid color-mix(in srgb, var(--stone) 18%, transparent);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--stone) 6%, transparent);
+      box-shadow: 0 2px 18px color-mix(in srgb, black 50%, transparent);
+    }
+
+    .brand .wordmark {
+      letter-spacing: 0.04em;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .socials { display: flex; gap: 10px; }
+    .icon-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--stone) 22%, transparent);
+      text-decoration: none;
+      transition: transform .08s ease, border-color .2s ease, background .2s ease;
+    }
+    .icon-link:hover { transform: translateY(-1px); border-color: var(--lavender); background: color-mix(in srgb, var(--lavender) 10%, transparent); }
+    .icon-link svg { width: 20px; height: 20px; fill: var(--stone); }
+
+    main { padding: 28px 0; }
+
+    .hero {
+      display: grid;
+      gap: 20px;
+    }
+
+    .tagline {
+      display: inline-block;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--stone) 70%, transparent);
+      background: linear-gradient(90deg, color-mix(in srgb, var(--lavender) 16%, transparent), color-mix(in srgb, var(--ocher) 14%, transparent));
+      padding: 8px 12px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+
+    .blurb {
+      font-size: clamp(18px, 2.4vw, 20px);
+      color: color-mix(in srgb, var(--stone) 94%, transparent);
+    }
+
+    .cta-card {
+      margin-top: 14px;
+      border: 1px solid color-mix(in srgb, var(--stone) 18%, transparent);
+      border-radius: 18px;
+      padding: 18px;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--dark-earth) 10%, transparent), transparent 70%);
+      box-shadow: 0 10px 40px color-mix(in srgb, black 60%, transparent);
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+
+    .row { display: grid; gap: 12px; }
+    @media (min-width: 640px) { .row { grid-template-columns: 1fr 1fr; } }
+
+    label { font-size: 12px; color: color-mix(in srgb, var(--stone) 70%, transparent); }
+
+    input, button { font: inherit; }
+
+    .input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--stone) 30%, transparent);
+      background: color-mix(in srgb, var(--stone) 4%, transparent);
+      color: var(--stone);
+      outline: none;
+      transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .input::placeholder { color: color-mix(in srgb, var(--stone) 45%, transparent); }
+    .input:focus { border-color: var(--lavender); background: color-mix(in srgb, var(--stone) 7%, transparent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--lavender) 20%, transparent); }
+
+    .submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--stone) 22%, transparent);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--ocher) 22%, transparent), color-mix(in srgb, var(--terracotta) 10%, transparent));
+      color: var(--night);
+      font-weight: 650;
+      cursor: pointer;
+      transition: transform .08s ease, filter .2s ease;
+    }
+    .submit:hover { transform: translateY(-1px); filter: brightness(1.06); }
+
+    .fineprint { font-size: 12px; color: color-mix(in srgb, var(--stone) 65%, transparent); }
+
+    footer { padding: 22px 0 36px; text-align: center; color: color-mix(in srgb, var(--stone) 55%, transparent); font-size: 13px; }
+
+    /* Subtle grid background */
+    .bg-grid {
+      position: fixed; inset: 0; pointer-events: none; opacity: .06;
+      background-image: radial-gradient(circle at 1px 1px, var(--lavender) 1px, transparent 0);
+      background-size: 22px 22px;
+      mask-image: radial-gradient(1200px 800px at 50% 10%, black, transparent);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="container">
+      <header>
+        <div class="brand">
+          <img src="Logo.jpeg" alt="Temporal logo" />
+          <div class="wordmark">Temporal</div>
+        </div>
+        <nav class="socials" aria-label="Social links">
+          <a class="icon-link" href="https://soundcloud.com/temporal_sound" target="_blank" rel="noopener" aria-label="Temporal on SoundCloud">
+            <!-- SoundCloud SVG -->
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M38 24a12 12 0 0 1 12 12h6a8 8 0 0 1 0 16H24V24.5A11.5 11.5 0 0 1 35.5 13H36a12 12 0 0 1 2 .16V24Z"/></svg>
+          </a>
+          <a class="icon-link" href="https://instagram.com/temporal_sound" target="_blank" rel="noopener" aria-label="Temporal on Instagram">
+            <!-- Instagram SVG -->
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.75-.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z"/></svg>
+          </a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <span class="tagline">Portland-based collective</span>
+          <p class="blurb">
+            <strong>AlooOoo!</strong> We are Temporal— a Portland-based collective dedicated to throwing vibrant parties with kindred spirits. A group of travelers with roots all over the world, we are bound together by a shared love of music. Our sound traverses many realms: from deep, driving & powerful to mellow, soulful, & smooth. With an ear for the abstract and an eye for the odd, we infuse our events with love, curiosity, and a sprinkle of silliness.
+          </p>
+          <p class="blurb">
+            At the core of it all is self-expression: music as a means to share, to connect, and to be free. On the dancefloor we converge into one unified blorb; a zoological concoction of horses, camels, & geese. Join us and you’ll get it; you won’t regret it ✨
+          </p>
+
+          <div class="cta-card">
+            <form id="join" action="https://formspree.io/f/FORM_ENDPOINT" method="POST">
+              <div class="row">
+                <div>
+                  <label for="name">Name</label>
+                  <input class="input" id="name" name="name" type="text" placeholder="Your name" autocomplete="name" />
+                </div>
+                <div>
+                  <label for="email">Email</label>
+                  <input class="input" id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" />
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <label for="phone">Phone</label>
+                  <input class="input" id="phone" name="phone" type="tel" placeholder="(###) ###-####" autocomplete="tel" />
+                </div>
+                <div>
+                  <label for="note">Anything else (optional)</label>
+                  <input class="input" id="note" name="note" type="text" placeholder="Tell us what moves you" />
+                </div>
+              </div>
+              <button class="submit" type="submit">Join the list</button>
+              <p class="fineprint">We’ll only reach out about Temporal events. Unsubscribe anytime.</p>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div>© <span id="y"></span> Temporal</div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Current year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Optional: graceful inline success state for static hosting demos.
+    // If you connect a real endpoint, you may remove this handler.
+    const form = document.getElementById('join');
+    form.addEventListener('submit', async (e) => {
+      const endpointIsConfigured = !form.action.includes('FORM_ENDPOINT');
+      if (endpointIsConfigured) return; // let the real service handle it
+      e.preventDefault();
+      form.reset();
+      const btn = form.querySelector('.submit');
+      const original = btn.textContent;
+      btn.textContent = 'Thanks — you’re on the list!';
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 3800);
+    });
+  </script>
+</body>
+</html>
