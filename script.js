@@ -142,3 +142,28 @@ if (againBtn) {
         firstField && firstField.focus();
     });
 }
+
+// Initialize Swiper gallery when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Early return if Swiper is not available
+    if (typeof Swiper === 'undefined') return;
+
+    // Early return if carousel element doesn't exist
+    const carouselElement = document.querySelector('.gallery-swiper');
+    if (!carouselElement) return;
+
+    // Initialize Swiper with minimal configuration
+    new Swiper('.gallery-swiper', {
+        // Enable navigation arrows and pagination
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        // Enable loop for infinite scrolling
+        loop: true,
+    });
+});

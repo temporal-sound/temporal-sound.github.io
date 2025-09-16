@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="../styles.css">
 </head>
 
@@ -81,6 +82,29 @@
             </header>
 
             <main>
+                <!-- Image Carousel -->
+                <section class="image-carousel">
+                    <h3>Gallery</h3>
+                    <div class="swiper gallery-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="img/DSCF0778.jpg" alt="Event photo 1" />
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="img/IMG_3532.jpg" alt="Event photo 2" />
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="img/IMG_3551.jpg" alt="Event photo 3" />
+                            </div>
+                        </div>
+                        <!-- Navigation buttons -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <!-- Pagination -->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </section>
+
                 <section class="hero">
                     <p class="blurb">
                         <strong>¡Bienvenidos a Sonido!</strong> Join us for an extraordinary night of deep, driving, and soulful sounds that will transport you to another dimension. This special event celebrates the power of music to unite, inspire, and move us in ways we never imagined.
@@ -154,6 +178,7 @@
         ⏷
     </button>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="../script.js"></script>
 </body>
 
