@@ -228,6 +228,68 @@
             color: color-mix(in srgb, var(--stone) 85%, transparent);
             font-size: 15px;
         }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: color-mix(in srgb, var(--night) 85%, transparent);
+            color: var(--stone);
+            border: 1px solid color-mix(in srgb, var(--stone) 30%, transparent);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            animation: bounce 2s infinite;
+        }
+
+        .fab.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .fab:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .fab:active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-3px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-1px);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .fab {
+                bottom: 20px;
+                width: 52px;
+                height: 52px;
+                font-size: 22px;
+            }
+        }
     </style>
 </head>
 
@@ -356,13 +418,61 @@
         </div>
     </div>
 
+    <!-- Floating Action Button -->
+    <button class="fab" id="fab" aria-label="Go to stay in touch form" title="Stay in touch">
+        ⏷
+    </button>
+
     <script>
         // Current year
         document.getElementById('y').textContent = new Date().getFullYear();
 
+                                                        // Floating Action Button functionality
+                                                        const fab = document.getElementById('fab');
+                                                        const form = document.getElementById('join');
+                                                        const emailField = document.getElementById('email');
+
+                                                        function checkFormVisibility() {
+                                                            if (!form || !fab) return;
+
+                                                            const formRect = form.getBoundingClientRect();
+                                                            const windowHeight = window.innerHeight;
+
+                                                            // Check if form is visible in viewport
+                                                            const isFormVisible = formRect.top < windowHeight && formRect.bottom > 0;
+
+                                                            // Show FAB if form is not visible
+                                                            if (!isFormVisible) {
+                                                                fab.classList.add('visible');
+                                                            } else {
+                                                                fab.classList.remove('visible');
+                                                            }
+                                                        }
+
+                                                        // Check form visibility on scroll and resize
+                                                        window.addEventListener('scroll', checkFormVisibility);
+                                                        window.addEventListener('resize', checkFormVisibility);
+
+                                                        // Initial check
+                                                        checkFormVisibility();
+
+                                                        // FAB click handler - scroll to form and focus email field
+                                                        if (fab && form && emailField) {
+                                                            fab.addEventListener('click', () => {
+                                                                form.scrollIntoView({
+                                                                    behavior: 'smooth',
+                                                                    block: 'center'
+                                                                });
+
+                                                                // Focus email field after scroll animation
+                                                                setTimeout(() => {
+                                                                    emailField.focus();
+                                                                }, 500);
+                                                            });
+                                                        }
+
         // Optional: graceful inline success state for static hosting demos.
-        // If you connect a real endpoint, you may remove this handler.
-        const form = document.getElementById('join');
+                                                        // If you connect a real endpoint, you may remove this handler.
         const iframe = document.getElementById('join_target');
         const thankyou = document.getElementById('thankyou');
         const againBtn = document.getElementById('again');
