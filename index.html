@@ -311,15 +311,15 @@
                 </section>
 
                 <hr class="section-sep" />
-                <p class="card-intro">If you want to stay in touch and hear about upcoming events, leave some contact
-                    info below.</p>
+                <p class="card-intro">If you want to stay in touch and hear about upcoming events, provide your email or phone number
+                    below.</p>
                 <div class="cta-card">
                     <form id="join"
                         action="https://script.google.com/macros/s/AKfycbzLXD8WmlGX688ITOeoSx1USBp6WhDLTSGj8yn_-pt1AV4Uyhd103TvGhue3CPga_NT/exec"
                         method="POST" target="join_target">
                         <div class="row">
                             <div>
-                                <input class="input" id="name" name="name" type="text" placeholder="Your name"
+                                <input class="input" id="name" name="name" type="text" placeholder="Your name (optional)"
                                     autocomplete="name" />
                             </div>
                             <div>
@@ -334,14 +334,14 @@
                             </div>
                             <div>
                                 <input class="input" id="note" name="note" type="text"
-                                    placeholder="Tell us what moves you" />
+                                    placeholder="Tell us what moves you (optional)" />
                             </div>
                         </div>
                         <input type="hidden" id="ref" name="ref" />
                         <input type="hidden" id="ua" name="ua" />
                         <button class="submit" type="submit">Stay in touch</button>
                         <p id="form-error" class="fineprint" role="alert" aria-live="polite"
-                            style="display:none; color: #ffb4a8;">Please fill at least one field.</p>
+                            style="display:none; color: #ffb4a8;">Please provide at least your email or phone number to stay in touch.</p>
                         <p class="fineprint">We’ll only reach out about Temporal events. We respect your privacy — we
                             will never sell or share your data for any reason. Unsubscribe anytime.</p>
                     </form>
@@ -382,18 +382,17 @@
         let submissionTimeoutId = null;
         form.addEventListener('submit', async (e) => {
             if (submissionPending) { e.preventDefault(); return; }
-            const fields = ['name', 'email', 'phone', 'note'];
-            const hasAnyValue = fields.some((id) => {
-                const el = form.querySelector('#' + id);
-                return el && el.value && el.value.trim().length > 0;
-            });
+            const emailEl = form.querySelector('#email');
+            const phoneEl = form.querySelector('#phone');
+            const hasEmail = emailEl && emailEl.value && emailEl.value.trim().length > 0;
+            const hasPhone = phoneEl && phoneEl.value && phoneEl.value.trim().length > 0;
+            const hasAnyValue = hasEmail || hasPhone;
 
             const errorEl = document.getElementById('form-error');
             if (!hasAnyValue) {
                 e.preventDefault();
                 if (errorEl) {
                     errorEl.style.display = 'block';
-                    errorEl.textContent = 'Please fill at least one field.';
                 }
                 const firstField = form.querySelector('#name') || form.querySelector('input');
                 firstField && firstField.focus();
