@@ -160,10 +160,6 @@
             }
         }
 
-        label {
-            font-size: 12px;
-            color: color-mix(in srgb, var(--stone) 70%, transparent);
-        }
 
         input,
         button {
@@ -323,24 +319,20 @@
                         method="POST" target="join_target">
                         <div class="row">
                             <div>
-                                <label for="name">Name (optional)</label>
                                 <input class="input" id="name" name="name" type="text" placeholder="Your name"
                                     autocomplete="name" />
                             </div>
                             <div>
-                                <label for="email">Email (optional)</label>
                                 <input class="input" id="email" name="email" type="email" placeholder="you@example.com"
                                     autocomplete="email" />
                             </div>
                         </div>
                         <div class="row">
                             <div>
-                                <label for="phone">Phone (optional)</label>
                                 <input class="input" id="phone" name="phone" type="tel" placeholder="(###) ###-####"
                                     autocomplete="tel" />
                             </div>
                             <div>
-                                <label for="note">Anything else (optional)</label>
                                 <input class="input" id="note" name="note" type="text"
                                     placeholder="Tell us what moves you" />
                             </div>
