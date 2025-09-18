@@ -50,6 +50,38 @@ header {
     padding: 20px 0 8px;
 }
 
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: min(960px, 92vw);
+    margin-bottom: 20px;
+}
+
+.logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--stone) 22%, transparent);
+    text-decoration: none;
+    transition: transform .08s ease, border-color .2s ease, background .2s ease;
+}
+
+.logo-link:hover {
+    transform: translateY(-1px);
+    border-color: var(--lavender);
+    background: color-mix(in srgb, var(--lavender) 10%, transparent);
+}
+
+.logo-link img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
 .brand img {
     width: 100px;
 }
@@ -59,6 +91,7 @@ header {
     font-weight: 600;
     font-size: 24px;
 }
+
 
 .tagline {
     display: block;
@@ -90,25 +123,6 @@ header {
     margin: 0;
 }
 
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: color-mix(in srgb, var(--stone) 70%, transparent);
-    text-decoration: none;
-    font-size: 14px;
-    margin-bottom: 20px;
-    transition: color 0.2s ease;
-}
-
-.back-link:hover {
-    color: var(--lavender);
-}
-
-.back-link::before {
-    content: "←";
-    font-size: 16px;
-}
 
 .event-details {
     background: color-mix(in srgb, var(--stone) 4%, transparent);
@@ -138,7 +152,6 @@ header {
     display: flex;
     gap: 10px;
     justify-content: center;
-    margin-top: .5em;
 }
 
 .icon-link {
@@ -175,6 +188,10 @@ main {
     margin-bottom: 80px;
 }
 
+.hero p {
+    font-size: clamp(18px, 2.4vw, 20px);
+    color: color-mix(in srgb, var(--stone) 94%, transparent);
+}
 .blurb {
     font-size: clamp(18px, 2.4vw, 20px);
     color: color-mix(in srgb, var(--stone) 94%, transparent);
@@ -190,6 +207,33 @@ form {
     grid-template-columns: 1fr;
 }
 
+.rsvp-form {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.rsvp-form .input {
+    flex: 1;
+}
+
+.rsvp-form .submit {
+    flex-shrink: 0;
+    min-width: 100px;
+}
+
+@media (max-width: 480px) {
+    .rsvp-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .rsvp-form .submit {
+        min-width: auto;
+    }
+}
 .row {
     display: grid;
     gap: 12px;
@@ -339,16 +383,9 @@ footer {
     margin: 40px 0;
 }
 
-.image-carousel h3 {
-    color: var(--lavender);
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 24px;
-    text-align: center;
-}
 
 .gallery-swiper {
-    max-width: 600px;
+    max-width: min(960px, 92vw);
     margin: 0 auto;
     border-radius: 16px;
     overflow: hidden;
@@ -357,7 +394,7 @@ footer {
 }
 
 .gallery-swiper .swiper-slide {
-    height: 400px;
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -429,7 +466,7 @@ footer {
 /* Mobile responsiveness for Swiper */
 @media (max-width: 640px) {
     .gallery-swiper .swiper-slide {
-        height: 300px;
+        height: 350px;
     }
 
     .gallery-swiper .swiper-button-next,
