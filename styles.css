@@ -50,6 +50,88 @@ header {
     padding: 20px 0 8px;
 }
 
+/* Sonido page header background */
+.sonido-header {
+    /* Fallback JPG for browsers without image-set support */
+    background-image: url('sonido/banner.jpg');
+    /* Prefer WebP when supported */
+    background-image: image-set(url('sonido/banner.webp') type('image/webp') 1x,
+            url('sonido/banner.jpg') type('image/jpeg') 1x);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    /* Layout & spacing */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    text-align: left;
+    padding: 20px 20px 24px;
+    min-height: 260px;
+}
+
+/* Add some vertical space so the background is visible */
+.sonido-header .event-title,
+.sonido-header .event-subtitle,
+.sonido-header .event-date {
+    /* Add subtle text shadow for legibility over image */
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* Typography and placement for header text over banner */
+.sonido-header .event-title {
+    margin: 0 0 6px;
+    margin-top: auto; /* push the text block to the bottom */
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: bolder;
+    font-size: clamp(40px, 9vw, 72px);
+}
+
+.sonido-header .event-subtitle {
+    margin: 0 0 6px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    font-size: clamp(14px, 2.2vw, 18px);
+}
+
+.sonido-header .event-date {
+    margin: 0;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 800;
+    font-size: clamp(13px, 2vw, 16px);
+}
+
+@media (min-width: 768px) {
+    .sonido-header {
+        padding: 24px 24px 28px;
+        min-height: 360px;
+    }
+}
+
+/* Solid nav buttons over banner */
+.sonido-header .logo-link,
+.sonido-header .icon-link {
+    background: var(--night);
+    border-color: color-mix(in srgb, var(--stone) 35%, transparent);
+}
+
+.sonido-header .logo-link:hover,
+.sonido-header .icon-link:hover {
+    background: var(--lavender);
+    border-color: var(--lavender);
+}
+
+.sonido-header .icon-link:hover svg {
+    fill: var(--night);
+}
+
 .top-nav {
     display: flex;
     align-items: center;
