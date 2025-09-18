@@ -143,8 +143,99 @@ if (againBtn) {
     });
 }
 
+// Event Modal functionality
+function initEventModal() {
+    const modal = document.getElementById('eventModal');
+    const closeBtn = modal?.querySelector('.modal-close');
+    const dismissBtn = modal?.querySelector('.modal-dismiss');
+    const backdrop = modal?.querySelector('.modal-backdrop');
+
+    if (!modal) return;
+
+    // Event date - Saturday, October 11th, 2025 at 10:00 PM PST
+    // For testing: uncomment the line below and comment the line above to test modal
+    // const eventDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // Tomorrow
+    const eventDate = new Date('2025-10-11T22:00:00-08:00');
+    const currentDate = new Date();
+
+    // Check if we should show the modal (before event date)
+    const shouldShowModal = currentDate < eventDate;
+
+    if (shouldShowModal) {
+        // Show modal after a short delay for better UX
+        setTimeout(() => {
+            modal.classList.add('show');
+            modal.setAttribute('aria-hidden', 'false');
+            // Focus management for accessibility
+            const firstFocusable = modal.querySelector('.modal-cta');
+            firstFocusable?.focus();
+        }, 1000);
+    }
+
+    // Close modal function
+    function closeModal() {
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+        // Return focus to body
+        document.body.focus();
+    }
+
+    // Dismiss modal
+    function dismissModal() {
+        closeModal();
+    }
+
+    // Event listeners
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+
+    if (dismissBtn) {
+        dismissBtn.addEventListener('click', dismissModal);
+    }
+
+    if (backdrop) {
+        backdrop.addEventListener('click', closeModal);
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            closeModal();
+        }
+    });
+
+    // Trap focus within modal when open
+    modal.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('show')) return;
+
+        if (e.key === 'Tab') {
+            const focusableElements = modal.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    lastElement.focus();
+                    e.preventDefault();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    firstElement.focus();
+                    e.preventDefault();
+                }
+            }
+        }
+    });
+}
+
 // Initialize Swiper gallery when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize event modal
+    initEventModal();
+
     // Early return if Swiper is not available
     if (typeof Swiper === 'undefined') return;
 
