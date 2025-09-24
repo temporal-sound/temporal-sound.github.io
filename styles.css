@@ -279,6 +279,14 @@ main {
     color: color-mix(in srgb, var(--stone) 94%, transparent);
 }
 
+.blurb a {
+    color: var(--lavender);
+}
+
+.blurb a:hover {
+    color: color-mix(in srgb, var(--lavender) 80%, transparent);
+}
+
 .cta-card {
     margin-top: 14px;
 }
