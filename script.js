@@ -115,7 +115,14 @@ form.addEventListener('submit', async (e) => {
     e.preventDefault();
     form.reset();
     form.style.display = 'none';
-    if (thankyou) thankyou.style.display = 'block';
+    if (thankyou) {
+      thankyou.style.display = "block";
+      const link = thankyou.querySelector("a");
+      if (link) {
+        console.log("Following link:", link.href);
+        window.location.href = link.href;
+      }
+    }
 });
 
 // When the hidden iframe finishes loading after a real submission, show success
@@ -126,7 +133,14 @@ if (iframe) {
         submissionPending = false;
         form.reset();
         form.style.display = 'none';
-        if (thankyou) thankyou.style.display = 'block';
+        if (thankyou) {
+          thankyou.style.display = "block";
+          const link = thankyou.querySelector("a");
+          if (link) {
+            console.log("Following link:", link.href);
+            window.location.href = link.href;
+          }
+        }
     });
 }
 
