@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../styles.css?v=20250127120000">
+    <link rel="stylesheet" href="../styles.css?v=20250128120000">
 </head>
 
 <body>
@@ -162,12 +162,16 @@
                     <form id="join"
                         action="https://script.google.com/macros/s/AKfycbzLXD8WmlGX688ITOeoSx1USBp6WhDLTSGj8yn_-pt1AV4Uyhd103TvGhue3CPga_NT/exec"
                         method="POST" target="join_target">
-                        <div class="rsvp-form">
-                            <input class="input" id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email"
-                                required />
-                            <input class="input" id="phone" name="phone" type="tel" placeholder="(###) ###-#### (optional)"
-                                autocomplete="tel" />
-                            <button class="submit" type="submit">RSVP</button>
+                        <div class="rsvp-container">
+                            <div class="rsvp-form">
+                                <input class="input" id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email"
+                                    required />
+                                <input class="input" id="phone" name="phone" type="tel" placeholder="(###) ###-#### (optional)"
+                                    autocomplete="tel" />
+                                <button class="submit" type="submit">RSVP</button>
+                            </div>
+                            <p class="fineprint"><strong>Note:</strong> This RSVP is not a ticket. You still need to purchase a ticket through RA.
+                            </p>
                         </div>
                         <input type="hidden" id="note" name="note" value="Sonido 2 RSVP" />
                         <input type="hidden" id="ref" name="ref" />
