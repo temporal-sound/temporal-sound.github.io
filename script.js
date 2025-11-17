@@ -178,10 +178,10 @@ function initEventModal() {
 
   if (!modal) return;
 
-  // Event date - Saturday, November 1st, 2025 at 8:00 PM PST (ends next day at 3:00 AM)
+  // Event date - Saturday, December 6th, 2025
   // For testing: uncomment the line below and comment the line above to test modal
   // const eventDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // Tomorrow
-  const eventDate = new Date("2025-11-02T03:00:00-08:00");
+  const eventDate = new Date("2025-12-07T03:00:00-08:00");
   const currentDate = new Date();
 
   // Check if we should show the modal (before event date)
