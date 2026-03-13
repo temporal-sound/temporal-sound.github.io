@@ -178,11 +178,11 @@ function initEventModal() {
 
   if (!modal) return;
 
-  // Event date - Saturday, January 31st, 2026 at 9pm PT
-  // Modal shows until event ends at 3am the next day (February 1st)
+  // Event date - Saturday, April 4th, 2026 at 8pm PT
+  // Modal shows until event ends at 4am the next day (April 5th)
   // For testing: uncomment the line below and comment the line above to test modal
   // const eventDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // Tomorrow
-  const eventDate = new Date("2026-02-01T03:00:00-08:00");
+  const eventDate = new Date("2026-04-05T04:00:00-07:00");
   const currentDate = new Date();
 
   // Check if we should show the modal (before event date)
