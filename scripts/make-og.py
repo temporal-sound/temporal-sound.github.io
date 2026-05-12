@@ -1,18 +1,23 @@
 """
 Generate a branded 1200x630 OG image for Temporal.
-Uses the same fonts as the landing page:
-  - Odinson for the "Temporal" wordmark
-  - Bricolage Grotesque (400/700) for eyebrow + tagline
+Uses the same fonts + logo as the landing page header:
+  - The full horizontal logotype (symbol + TEMPORAL) from brand/logo-mark.svg
+  - Bricolage Grotesque (400/700) for the eyebrow + tagline
+
+The SVG is pre-rendered to scripts/cache/logo-mark.png via:
+    sed 's/#ffffff/#000000/g' brand/logo-mark.svg > /tmp/logo-mark-black.svg
+    qlmanage -t -s 1600 -o scripts/cache /tmp/logo-mark-black.svg
+    mv scripts/cache/logo-mark-black.svg.png scripts/cache/logo-mark.png
+The cached PNG is recolored to white at runtime.
 """
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageOps
 import os
 
 W, H = 1200, 630
 ROOT = "/Users/alevizio/temporal"
-ODINSON_PATH = f"{ROOT}/fonts/odinson.ttf"
+LOGO_LOCKUP = f"{ROOT}/scripts/cache/logo-mark.png"
 BRICOLAGE_700 = f"{ROOT}/scripts/fonts/bricolage-700.ttf"
 BRICOLAGE_400 = f"{ROOT}/scripts/fonts/bricolage-400.ttf"
-LOGO_SYMBOL_PATH = f"{ROOT}/brand/logo.png"
 OUT = f"{ROOT}/img/og-default.jpg"
 
 # Brand colors (R, G, B)
@@ -46,16 +51,9 @@ draw = ImageDraw.Draw(img)
 # --- Eyebrow: "Portland · Artist Collective" (Bricolage Bold, tracked) ---
 eyebrow_font = ImageFont.truetype(BRICOLAGE_700, 22)
 eyebrow_text = "PORTLAND  ·  ARTIST COLLECTIVE"
-# Manual letter-spacing — PIL has no native tracking control
-def draw_tracked(xy, text, font, fill, tracking_em=0.28):
-    x, y = xy
-    space = int(font.size * tracking_em)
-    for ch in text:
-        draw.text((x, y), ch, font=font, fill=fill)
-        bb = draw.textbbox((0, 0), ch, font=font)
-        x += (bb[2] - bb[0]) + space
 
-def measure_tracked(text, font, tracking_em=0.28):
+
+def measure_tracked(text, font, tracking_em):
     space = int(font.size * tracking_em)
     w = 0
     for i, ch in enumerate(text):
@@ -65,37 +63,56 @@ def measure_tracked(text, font, tracking_em=0.28):
             w += space
     return w
 
-ew = measure_tracked(eyebrow_text, eyebrow_font, 0.18)
-draw_tracked(((W - ew) / 2, 110), eyebrow_text, eyebrow_font, OCHER, 0.18)
 
-# --- Wordmark: "Temporal" in Odinson, huge ---
-wordmark_font = ImageFont.truetype(ODINSON_PATH, 240)
-wordmark = "Temporal"
-wbox = draw.textbbox((0, 0), wordmark, font=wordmark_font)
-ww = wbox[2] - wbox[0]
-wx = (W - ww) / 2 - wbox[0]
-wy = 175
-draw.text((wx, wy), wordmark, font=wordmark_font, fill=STONE)
+def draw_tracked(xy, text, font, fill, tracking_em):
+    x, y = xy
+    space = int(font.size * tracking_em)
+    for ch in text:
+        draw.text((x, y), ch, font=font, fill=fill)
+        bb = draw.textbbox((0, 0), ch, font=font)
+        x += (bb[2] - bb[0]) + space
+
+
+eb_track = 0.18
+ew = measure_tracked(eyebrow_text, eyebrow_font, eb_track)
+draw_tracked(((W - ew) / 2, 110), eyebrow_text, eyebrow_font, OCHER, eb_track)
+
+# --- Full horizontal logotype (symbol + TEMPORAL), recolored to stone ---
+logo = Image.open(LOGO_LOCKUP).convert("RGBA")
+# Trim transparent/white border to find tight bbox of the artwork
+gray = ImageOps.invert(logo.convert("L"))     # so dark logo → bright on black
+bbox = gray.getbbox()
+if bbox:
+    logo = logo.crop(bbox)
+
+# Recolor: every opaque-darkish pixel becomes stone color (white-ish)
+data = logo.load()
+for y in range(logo.height):
+    for x in range(logo.width):
+        r, g, b, a = data[x, y]
+        # If pixel is dark (the original artwork)
+        if a > 0 and (r + g + b) < 600:  # darkish
+            data[x, y] = (*STONE, a)
+        else:
+            data[x, y] = (0, 0, 0, 0)
+
+# Resize to fit OG composition: width target ~820px (logotype is ~4.83:1)
+target_w = 820
+ratio = target_w / logo.width
+target_h = int(logo.height * ratio)
+logo = logo.resize((target_w, target_h), Image.LANCZOS)
+
+# Center horizontally, vertically positioned in the middle band
+lx = (W - logo.width) // 2
+ly = (H - logo.height) // 2 - 10
+img.paste(logo, (lx, ly), logo)
 
 # --- Tagline (Bricolage Regular) ---
 tag_font = ImageFont.truetype(BRICOLAGE_400, 30)
 tagline = "A collective lovingly curating dancefloors"
 tbox = draw.textbbox((0, 0), tagline, font=tag_font)
 tw = tbox[2] - tbox[0]
-draw.text(((W - tw) / 2, 475), tagline, font=tag_font, fill=(225, 218, 200))
-
-# --- Brand symbol bottom-right ---
-if os.path.exists(LOGO_SYMBOL_PATH):
-    symbol = Image.open(LOGO_SYMBOL_PATH).convert("RGBA")
-    # Recolor to ocher: replace black pixels with ocher
-    px = symbol.load()
-    for y in range(symbol.height):
-        for x in range(symbol.width):
-            r, g, b, a = px[x, y]
-            if a > 0:
-                px[x, y] = (*OCHER, int(a * 0.85))
-    symbol.thumbnail((90, 90), Image.LANCZOS)
-    img.paste(symbol, (W - 130, H - 130), symbol)
+draw.text(((W - tw) / 2, 510), tagline, font=tag_font, fill=(225, 218, 200))
 
 # Save
 img.save(OUT, "JPEG", quality=88, optimize=True)
