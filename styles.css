@@ -116,6 +116,16 @@ button {
     font: inherit;
 }
 
+/* Prevent single-word last lines in body copy + balance heading line lengths */
+p, li, .blurb, .home-tagline, .pull-quote {
+    text-wrap: pretty;
+}
+
+h1, h2, h3, h4, .section-title, .join-heading, .event-featured-title,
+.modal-event-title, .past-card-title {
+    text-wrap: balance;
+}
+
 /* ============================================================
    Scroll-triggered reveal — sections fade up as they enter
    ============================================================ */
@@ -1592,6 +1602,14 @@ footer .icon-link svg {
     color: color-mix(in srgb, var(--stone) 50%, transparent);
     letter-spacing: 0.04em;
     line-height: var(--leading-snug);
+}
+
+.footer-iso {
+    margin: 4px 0 0;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: color-mix(in srgb, var(--stone) 28%, transparent);
 }
 
 .footer .sep,

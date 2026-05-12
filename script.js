@@ -58,6 +58,13 @@ document.documentElement.classList.add("js-on");
 // Current year
 document.getElementById("y").textContent = new Date().getFullYear();
 
+// ISO date marker at the bottom of the footer
+(function () {
+  const el = document.getElementById("footerIso");
+  if (!el) return;
+  el.textContent = new Date().toISOString().slice(0, 10);
+})();
+
 // Scroll reveal — fade-up sections as they enter the viewport
 (function () {
   const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
