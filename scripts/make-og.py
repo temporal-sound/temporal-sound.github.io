@@ -1,6 +1,8 @@
 """
 Generate a branded 1200x630 OG image for Temporal.
-Uses Odinson for the wordmark + Helvetica for the tagline, brand palette gradient.
+Uses the same fonts as the landing page:
+  - Odinson for the "Temporal" wordmark
+  - Bricolage Grotesque (400/700) for eyebrow + tagline
 """
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import os
@@ -8,6 +10,8 @@ import os
 W, H = 1200, 630
 ROOT = "/Users/alevizio/temporal"
 ODINSON_PATH = f"{ROOT}/fonts/odinson.ttf"
+BRICOLAGE_700 = f"{ROOT}/scripts/fonts/bricolage-700.ttf"
+BRICOLAGE_400 = f"{ROOT}/scripts/fonts/bricolage-400.ttf"
 LOGO_SYMBOL_PATH = f"{ROOT}/brand/logo.png"
 OUT = f"{ROOT}/img/og-default.jpg"
 
@@ -39,32 +43,46 @@ img = Image.alpha_composite(img.convert("RGBA"), glow).convert("RGB")
 
 draw = ImageDraw.Draw(img)
 
-# --- Eyebrow: "Portland · Artist Collective" ---
-HELVETICA = "/System/Library/Fonts/Helvetica.ttc"
-eyebrow_font = ImageFont.truetype(HELVETICA, 22, index=1)  # Bold
+# --- Eyebrow: "Portland · Artist Collective" (Bricolage Bold, tracked) ---
+eyebrow_font = ImageFont.truetype(BRICOLAGE_700, 22)
 eyebrow_text = "PORTLAND  ·  ARTIST COLLECTIVE"
-# Track out manually with spacing
-tracked = "  ".join(eyebrow_text)
-ebox = draw.textbbox((0, 0), eyebrow_text, font=eyebrow_font)
-ew = ebox[2] - ebox[0]
-draw.text(((W - ew) / 2, 110), eyebrow_text, font=eyebrow_font, fill=OCHER)
+# Manual letter-spacing — PIL has no native tracking control
+def draw_tracked(xy, text, font, fill, tracking_em=0.28):
+    x, y = xy
+    space = int(font.size * tracking_em)
+    for ch in text:
+        draw.text((x, y), ch, font=font, fill=fill)
+        bb = draw.textbbox((0, 0), ch, font=font)
+        x += (bb[2] - bb[0]) + space
+
+def measure_tracked(text, font, tracking_em=0.28):
+    space = int(font.size * tracking_em)
+    w = 0
+    for i, ch in enumerate(text):
+        bb = draw.textbbox((0, 0), ch, font=font)
+        w += (bb[2] - bb[0])
+        if i < len(text) - 1:
+            w += space
+    return w
+
+ew = measure_tracked(eyebrow_text, eyebrow_font, 0.18)
+draw_tracked(((W - ew) / 2, 110), eyebrow_text, eyebrow_font, OCHER, 0.18)
 
 # --- Wordmark: "Temporal" in Odinson, huge ---
 wordmark_font = ImageFont.truetype(ODINSON_PATH, 240)
 wordmark = "Temporal"
 wbox = draw.textbbox((0, 0), wordmark, font=wordmark_font)
 ww = wbox[2] - wbox[0]
-wh = wbox[3] - wbox[1]
 wx = (W - ww) / 2 - wbox[0]
 wy = 175
 draw.text((wx, wy), wordmark, font=wordmark_font, fill=STONE)
 
-# --- Tagline ---
-tag_font = ImageFont.truetype(HELVETICA, 30, index=2)  # Light
+# --- Tagline (Bricolage Regular) ---
+tag_font = ImageFont.truetype(BRICOLAGE_400, 30)
 tagline = "A collective lovingly curating dancefloors"
 tbox = draw.textbbox((0, 0), tagline, font=tag_font)
 tw = tbox[2] - tbox[0]
-draw.text(((W - tw) / 2, 470), tagline, font=tag_font, fill=(220, 215, 200))
+draw.text(((W - tw) / 2, 475), tagline, font=tag_font, fill=(225, 218, 200))
 
 # --- Brand symbol bottom-right ---
 if os.path.exists(LOGO_SYMBOL_PATH):
