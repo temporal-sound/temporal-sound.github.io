@@ -668,7 +668,7 @@ form .btn-block {
     margin: 0;
     font-family: var(--font-brand);
     font-weight: var(--weight-regular);
-    font-size: var(--text-3xl);
+    font-size: var(--text-4xl);
     line-height: var(--leading-tight);
     letter-spacing: var(--tracking-normal);
     color: var(--stone);
@@ -1605,11 +1605,23 @@ footer .icon-link svg {
 }
 
 .footer-iso {
-    margin: 4px 0 0;
-    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: color-mix(in srgb, var(--stone) 28%, transparent);
+    margin: 8px 0 0;
+    width: 40px;
+    height: 40px;
+    opacity: 0.45;
+    transition: opacity 0.3s var(--ease-out-quart);
+}
+
+.footer-iso img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0) invert(1);
+}
+
+.footer-iso:hover {
+    opacity: 0.7;
 }
 
 .footer .sep,
