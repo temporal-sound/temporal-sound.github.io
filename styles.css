@@ -2521,13 +2521,14 @@ footer .sep {
 
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 480px) {
     .events-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
     }
 }
 
@@ -2621,14 +2622,14 @@ a.event-card:hover .event-card-image img:not(.event-card-mark) {
 }
 
 .event-card-body {
-    padding: 18px 18px 20px;
+    padding: 12px 12px 14px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
 }
 
 .event-card-series {
-    font-size: var(--text-micro);
+    font-size: 9px;
     text-transform: uppercase;
     letter-spacing: var(--tracking-wide);
     color: var(--ocher);
@@ -2636,21 +2637,21 @@ a.event-card:hover .event-card-image img:not(.event-card-mark) {
 }
 
 .event-card-title {
-    margin: 2px 0 2px;
+    margin: 1px 0;
     font-family: var(--font-display);
     font-weight: var(--weight-semibold);
-    font-size: var(--text-lg);
+    font-size: var(--text-base);
     line-height: var(--leading-tight);
     letter-spacing: var(--tracking-tight);
     color: var(--stone);
     display: inline-flex;
     align-items: baseline;
-    gap: 6px;
+    gap: 4px;
     flex-wrap: wrap;
 }
 
 .event-card-glyph {
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     color: var(--ocher);
     opacity: 0.7;
     transition: transform 0.2s ease, opacity 0.2s ease;
@@ -2658,24 +2659,24 @@ a.event-card:hover .event-card-image img:not(.event-card-mark) {
 
 .event-card-date {
     margin: 0;
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     color: color-mix(in srgb, var(--stone) 78%, transparent);
     font-weight: var(--weight-medium);
 }
 
 .event-card-lineup {
     margin: 0;
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     color: color-mix(in srgb, var(--stone) 70%, transparent);
     line-height: var(--leading-snug);
 }
 
 .event-card-type {
-    margin: 4px 0 0;
-    font-size: var(--text-xs);
+    margin: 2px 0 0;
+    font-size: 10px;
     color: color-mix(in srgb, var(--stone) 50%, transparent);
     text-transform: uppercase;
-    letter-spacing: var(--tracking-wide);
+    letter-spacing: 0.16em;
     line-height: var(--leading-snug);
 }
 
