@@ -2282,7 +2282,7 @@ footer .sep {
 }
 
 .sonido-hero-title {
-    margin: 12px 0 18px;
+    margin: 12px auto 18px;
 }
 
 .sonido-hero-meta {
@@ -2298,33 +2298,31 @@ footer .sep {
     opacity: 0.7;
 }
 
-/* Banner figure — wide hero image */
+/* Banner figure — wide hero image, full natural aspect (2560×1000), no crop */
 .sonido-banner {
     position: relative;
     margin: 0 0 64px;
     padding: 0;
     border-radius: var(--r-xl);
     overflow: hidden;
-    aspect-ratio: 16 / 7;
     background: color-mix(in srgb, var(--night) 60%, transparent);
     border: 1px solid color-mix(in srgb, var(--stone) 12%, transparent);
     box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
 }
 
-.sonido-banner img,
 .sonido-banner picture {
-    width: 100%;
-    height: 100%;
     display: block;
+    width: 100%;
 }
 
 .sonido-banner img {
-    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 @media (max-width: 640px) {
     .sonido-banner {
-        aspect-ratio: 4 / 3;
         margin-bottom: 48px;
     }
 }
