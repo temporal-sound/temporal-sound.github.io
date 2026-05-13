@@ -867,8 +867,10 @@ form .btn-block {
         aspect-ratio: 4 / 5;
         max-height: 56vh;
     }
+    /* Mobile: fill the flyer cell — no side bars */
     .event-featured-flyer img {
         min-height: 0;
+        object-fit: cover;
     }
     .event-featured-body {
         align-items: center;
@@ -1940,12 +1942,12 @@ footer .sep {
 
     .modal-flyer {
         aspect-ratio: 4 / 5;
-        max-height: 42vh;
+        max-height: none;
     }
 
-    /* On mobile, show the full flyer (no crop) — bg fills any letterbox */
+    /* Container aspect matches the 4:5 image — no crop, no bars */
     .modal-flyer img {
-        object-fit: contain;
+        object-fit: cover;
     }
 
     .modal-body { padding: 22px; }
