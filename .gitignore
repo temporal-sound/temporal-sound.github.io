@@ -1,1 +1,4 @@
 img_src/
+.DS_Store
+**/.DS_Store
+.vercel
