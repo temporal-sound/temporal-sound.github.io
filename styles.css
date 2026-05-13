@@ -754,6 +754,8 @@ form .btn-block {
 .event-featured-body {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: 10px;
     min-width: 0;
     padding: 28px 28px 28px 0;
@@ -828,6 +830,7 @@ form .btn-block {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 6px;
 }
 
@@ -844,7 +847,7 @@ form .btn-block {
 }
 
 .event-featured .btn-primary {
-    align-self: flex-start;
+    align-self: center;
     margin-top: 8px;
 }
 
