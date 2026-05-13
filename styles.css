@@ -853,39 +853,69 @@ form .btn-block {
 }
 
 @media (max-width: 640px) {
+    /* Compress everything above the featured card so the RSVP
+       button lands above the fold on most phones. */
+    .brand-mark img {
+        width: clamp(170px, 44vw, 210px);
+    }
+
+    .home-hero {
+        padding: 18px 0 26px;
+    }
+
+    .home-tagline {
+        font-size: clamp(22px, 5vw, 32px);
+        line-height: 1.15;
+    }
+
     .event-featured {
         grid-template-columns: 1fr;
         gap: 0;
         max-width: 460px;
         text-align: center;
+        margin-bottom: 32px;
         background:
             radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--ocher) 16%, transparent) 0%, transparent 55%),
             linear-gradient(160deg, var(--night-2) 0%, var(--night) 100%);
     }
+
     .event-featured-flyer {
         height: auto;
         aspect-ratio: 4 / 5;
-        max-height: 56vh;
+        max-height: 38vh;
     }
+
     /* Mobile: fill the flyer cell — no side bars */
     .event-featured-flyer img {
         min-height: 0;
         object-fit: cover;
     }
+
     .event-featured-body {
         align-items: center;
-        gap: 8px;
-        padding: 24px;
+        gap: 6px;
+        padding: 18px 18px 20px;
     }
+
+    /* Trim non-essential copy on mobile so the RSVP stays in view */
     .event-featured-blurb {
-        font-size: var(--text-sm);
+        display: none;
     }
+
     .event-featured-tags {
         justify-content: center;
+        gap: 5px;
     }
+
+    .event-featured-tags li {
+        padding: 3px 8px;
+        font-size: 10px;
+    }
+
     .event-featured .btn-primary {
         align-self: stretch;
-        margin-top: 12px;
+        margin-top: 8px;
+        padding: 14px 20px;
     }
 }
 
