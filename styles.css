@@ -2272,3 +2272,180 @@ footer .sep {
         height: 8px;
     }
 }
+
+/* ============================================================
+   /sonido/ page — redesigned to match the homepage system
+   ============================================================ */
+.sonido-hero {
+    padding: 24px 0 32px;
+    text-align: center;
+}
+
+.sonido-hero-title {
+    margin: 12px 0 18px;
+}
+
+.sonido-hero-meta {
+    margin: 0;
+    font-size: var(--text-md);
+    color: color-mix(in srgb, var(--stone) 78%, transparent);
+    line-height: var(--leading-snug);
+}
+
+.sonido-hero-meta .sep {
+    color: var(--ocher);
+    margin: 0 0.55em;
+    opacity: 0.7;
+}
+
+/* Banner figure — wide hero image */
+.sonido-banner {
+    position: relative;
+    margin: 0 0 64px;
+    padding: 0;
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    aspect-ratio: 16 / 7;
+    background: color-mix(in srgb, var(--night) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--stone) 12%, transparent);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+
+.sonido-banner img,
+.sonido-banner picture {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.sonido-banner img {
+    object-fit: cover;
+}
+
+@media (max-width: 640px) {
+    .sonido-banner {
+        aspect-ratio: 4 / 3;
+        margin-bottom: 48px;
+    }
+}
+
+/* Native scroll-snap photo gallery (replaces Swiper) */
+.sonido-gallery {
+    margin: 0 0 64px;
+}
+
+.sonido-gallery .section-head {
+    margin-bottom: 22px;
+}
+
+.sonido-gallery-track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 4px 4px 14px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, black 36px, black calc(100% - 36px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+.sonido-gallery-track::-webkit-scrollbar {
+    display: none;
+}
+
+.sonido-gallery-track img {
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    width: clamp(280px, 60vw, 480px);
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--r-lg);
+    background: color-mix(in srgb, var(--night) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--stone) 10%, transparent);
+}
+
+/* Event recap (details + flyer) */
+.sonido-recap {
+    margin: 0 auto 80px;
+    max-width: 760px;
+}
+
+.sonido-recap .section-head {
+    margin-bottom: 26px;
+}
+
+.sonido-recap-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 36px;
+    align-items: start;
+}
+
+@media (max-width: 640px) {
+    .sonido-recap-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+}
+
+.sonido-recap-flyer {
+    display: block;
+    width: 100%;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: color-mix(in srgb, var(--night) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--stone) 14%, transparent);
+    box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.5);
+    transition: transform 0.25s var(--ease-out-quart);
+}
+
+.sonido-recap-flyer:hover {
+    transform: translateY(-2px) scale(1.01);
+}
+
+.sonido-recap-flyer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+@media (max-width: 640px) {
+    .sonido-recap-flyer {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+}
+
+.sonido-recap-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    border-top: 1px solid color-mix(in srgb, var(--stone) 12%, transparent);
+}
+
+.sonido-recap-list li {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 18px;
+    padding: 14px 4px;
+    border-bottom: 1px solid color-mix(in srgb, var(--stone) 10%, transparent);
+    line-height: var(--leading-snug);
+}
+
+.sonido-recap-list li > span:first-child {
+    color: var(--ocher);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-semibold);
+    line-height: 1.5;
+}
+
+.sonido-recap-list li > span:last-child {
+    color: color-mix(in srgb, var(--stone) 88%, transparent);
+    font-size: var(--text-sm);
+}

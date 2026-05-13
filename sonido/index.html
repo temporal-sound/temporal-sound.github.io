@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sonido — Temporal Event</title>
+    <title>Sonido II — A Temporal night at The Blind Liger</title>
     <meta name="description"
-        content="Behind an unmarked door in Portland, the Blind Liger lies in wait. Temporal presents the second edition of Sonido: a night devoted to sonic exploration. Saturday 12/6. 9pm - late." />
-    <meta property="og:title" content="Sonido — Temporal Sound Event" />
+        content="Behind an unmarked door in Portland, the Blind Liger lies in wait. A look back at Temporal's second edition of Sonido — a night devoted to sonic exploration." />
+    <meta property="og:title" content="Sonido II — A Temporal night at The Blind Liger" />
     <meta property="og:description"
-        content="Behind an unmarked door in Portland, the Blind Liger lies in wait. Temporal presents the second edition of Sonido: a night devoted to sonic exploration. Saturday 12/6. 9pm - late." />
+        content="Behind an unmarked door in Portland, the Blind Liger lies in wait. A look back at a night devoted to sonic exploration." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://temporal-liard.vercel.app/sonido/" />
     <meta property="og:site_name" content="Temporal" />
@@ -20,9 +20,9 @@
     <meta property="og:image:alt"
         content="Temporal — a Portland-based artist collective lovingly curating dancefloors" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Sonido — Temporal Sound Event" />
+    <meta name="twitter:title" content="Sonido II — A Temporal night at The Blind Liger" />
     <meta name="twitter:description"
-        content="Behind an unmarked door in Portland, the Blind Liger lies in wait. A night devoted to sonic exploration." />
+        content="Behind an unmarked door in Portland, the Blind Liger lies in wait. A look back at a night devoted to sonic exploration." />
     <meta name="twitter:image" content="https://temporal-liard.vercel.app/img/og-default.jpg" />
     <meta name="twitter:image:alt"
         content="Temporal — a Portland-based artist collective lovingly curating dancefloors" />
@@ -33,189 +33,238 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../styles.css?v=20250128120000">
+    <link rel="stylesheet" href="../styles.css?v=20260512770000">
 </head>
 
-<body>
+<body class="sonido-page">
+    <!-- Ambient backdrop (same as home) -->
+    <div class="ambient" aria-hidden="true">
+        <div class="ambient-halo"></div>
+        <span class="blob blob-lavender"></span>
+        <span class="blob blob-ocher"></span>
+        <span class="blob blob-terracotta"></span>
+        <span class="blob blob-grass"></span>
+        <canvas class="noise-canvas" id="noiseCanvas"></canvas>
+    </div>
+
     <div class="wrap">
         <div class="container">
-            <header class="sonido-header">
-                <div class="top-nav">
-                    <a href="../" class="logo-link">
-                        <img src="../brand/logo.png" alt="Temporal logo" />
+            <header class="site-header">
+                <a class="brand-mark" href="../" aria-label="Temporal home">
+                    <img src="../brand/logo-mark.svg" alt="" />
+                </a>
+                <nav class="socials" aria-label="Social links">
+                    <a class="icon-link" href="https://soundcloud.com/temporal_sound" target="_blank" rel="noopener"
+                        aria-label="Temporal on SoundCloud">
+                        <svg viewBox="-271 345.8 256 111.2" aria-hidden="true">
+                            <g>
+                                <path d="M-238.4,398.1c-0.8,0-1.4,0.6-1.5,1.5l-2.3,28l2.3,27.1c0.1,0.8,0.7,1.5,1.5,1.5c0.8,0,1.4-0.6,1.5-1.5l2.6-27.1l-2.6-28C-237,398.7-237.7,398.1-238.4,398.1z" />
+                                <path d="M-228.2,399.9c-0.9,0-1.7,0.7-1.7,1.7l-2.1,26l2.1,27.3c0.1,1,0.8,1.7,1.7,1.7c0.9,0,1.6-0.7,1.7-1.7l2.4-27.3l-2.4-26C-226.6,400.6-227.3,399.9-228.2,399.9z" />
+                                <path d="M-258.6,403.5c-0.5,0-1,0.4-1.1,1l-2.5,23l2.5,22.5c0.1,0.6,0.5,1,1.1,1c0.5,0,1-0.4,1.1-1l2.9-22.5l-2.9-23C-257.7,404-258.1,403.5-258.6,403.5z" />
+                                <path d="M-268.1,412.3c-0.5,0-1,0.4-1,1l-1.9,14.3l1.9,14c0.1,0.6,0.5,1,1,1s0.9-0.4,1-1l2.2-14l-2.2-14.2C-267.2,412.8-267.6,412.3-268.1,412.3z" />
+                                <path d="M-207.5,373.5c-1.2,0-2.1,0.9-2.2,2.1l-1.9,52l1.9,27.2c0.1,1.2,1,2.1,2.2,2.1s2.1-0.9,2.2-2.1l2.1-27.2l-2.1-52C-205.4,374.4-206.4,373.5-207.5,373.5z" />
+                                <path d="M-248.6,399c-0.7,0-1.2,0.5-1.3,1.3l-2.4,27.3l2.4,26.3c0.1,0.7,0.6,1.3,1.3,1.3c0.7,0,1.2-0.5,1.3-1.2l2.7-26.3l-2.7-27.3C-247.4,399.6-247.9,399-248.6,399z" />
+                                <path d="M-217.9,383.4c-1,0-1.9,0.8-1.9,1.9l-2,42.3l2,27.3c0.1,1.1,0.9,1.9,1.9,1.9s1.9-0.8,1.9-1.9l2.3-27.3l-2.3-42.3C-216,384.2-216.9,383.4-217.9,383.4z" />
+                                <path d="M-154.4,359.3c-1.8,0-3.2,1.4-3.2,3.2l-1.2,65l1.2,26.1c0,1.8,1.5,3.2,3.2,3.2c1.8,0,3.2-1.5,3.2-3.2l1.4-26.1l-1.4-65C-151.1,360.8-152.6,359.3-154.4,359.3z" />
+                                <path d="M-197.1,368.9c-1.3,0-2.3,1-2.4,2.4l-1.8,56.3l1.8,26.9c0,1.3,1.1,2.3,2.4,2.3s2.3-1,2.4-2.4l2-26.9l-2-56.3C-194.7,370-195.8,368.9-197.1,368.9z" />
+                                <path d="M-46.5,394c-4.3,0-8.4,0.9-12.2,2.4C-61.2,368-85,345.8-114,345.8c-7.1,0-14,1.4-20.1,3.8c-2.4,0.9-3,1.9-3,3.7v99.9c0,1.9,1.5,3.5,3.4,3.7c0.1,0,86.7,0,87.3,0c17.4,0,31.5-14.1,31.5-31.5C-15,408.1-29.1,394-46.5,394z" />
+                                <path d="M-143.6,353.2c-1.9,0-3.4,1.6-3.5,3.5l-1.4,70.9l1.4,25.7c0,1.9,1.6,3.4,3.5,3.4c1.9,0,3.4-1.6,3.5-3.5l1.5-25.8l-1.5-70.9C-140.2,354.8-141.7,353.2-143.6,353.2z" />
+                                <path d="M-186.5,366.8c-1.4,0-2.5,1.1-2.6,2.6l-1.6,58.2l1.6,26.7c0,1.4,1.2,2.6,2.6,2.6s2.5-1.1,2.6-2.6l1.8-26.7l-1.8-58.2C-184,367.9-185.1,366.8-186.5,366.8z" />
+                                <path d="M-175.9,368.1c-1.5,0-2.8,1.2-2.8,2.8l-1.5,56.7l1.5,26.5c0,1.6,1.3,2.8,2.8,2.8s2.8-1.2,2.8-2.8l1.7-26.5l-1.7-56.7C-173.1,369.3-174.3,368.1-175.9,368.1z" />
+                                <path d="M-165.2,369.9c-1.7,0-3,1.3-3,3l-1.4,54.7l1.4,26.3c0,1.7,1.4,3,3,3c1.7,0,3-1.3,3-3l1.5-26.3l-1.5-54.7C-162.2,371.3-163.5,369.9-165.2,369.9z" />
+                            </g>
+                        </svg>
                     </a>
-                    <nav class="socials" aria-label="Social links">
-                        <a class="icon-link" href="https://soundcloud.com/temporal_sound" target="_blank" rel="noopener"
-                            aria-label="Temporal on SoundCloud">
-                            <!-- SoundCloud SVG -->
-                            <svg viewBox="-271 345.8 256 111.2" aria-hidden="true">
-                                <g>
-                                    <path d="M-238.4,398.1c-0.8,0-1.4,0.6-1.5,1.5l-2.3,28l2.3,27.1c0.1,0.8,0.7,1.5,1.5,1.5c0.8,0,1.4-0.6,1.5-1.5l2.6-27.1l-2.6-28
-                                                                    C-237,398.7-237.7,398.1-238.4,398.1z" />
-                                    <path d="M-228.2,399.9c-0.9,0-1.7,0.7-1.7,1.7l-2.1,26l2.1,27.3c0.1,1,0.8,1.7,1.7,1.7c0.9,0,1.6-0.7,1.7-1.7l2.4-27.3l-2.4-26
-                                                                    C-226.6,400.6-227.3,399.9-228.2,399.9z" />
-                                    <path d="M-258.6,403.5c-0.5,0-1,0.4-1.1,1l-2.5,23l2.5,22.5c0.1,0.6,0.5,1,1.1,1c0.5,0,1-0.4,1.1-1l2.9-22.5l-2.9-23
-                                                                    C-257.7,404-258.1,403.5-258.6,403.5z" />
-                                    <path d="M-268.1,412.3c-0.5,0-1,0.4-1,1l-1.9,14.3l1.9,14c0.1,0.6,0.5,1,1,1s0.9-0.4,1-1l2.2-14l-2.2-14.2
-                                                                    C-267.2,412.8-267.6,412.3-268.1,412.3z" />
-                                    <path d="M-207.5,373.5c-1.2,0-2.1,0.9-2.2,2.1l-1.9,52l1.9,27.2c0.1,1.2,1,2.1,2.2,2.1s2.1-0.9,2.2-2.1l2.1-27.2l-2.1-52
-                                                                    C-205.4,374.4-206.4,373.5-207.5,373.5z" />
-                                    <path d="M-248.6,399c-0.7,0-1.2,0.5-1.3,1.3l-2.4,27.3l2.4,26.3c0.1,0.7,0.6,1.3,1.3,1.3c0.7,0,1.2-0.5,1.3-1.2l2.7-26.3l-2.7-27.3
-                                                                    C-247.4,399.6-247.9,399-248.6,399z" />
-                                    <path d="M-217.9,383.4c-1,0-1.9,0.8-1.9,1.9l-2,42.3l2,27.3c0.1,1.1,0.9,1.9,1.9,1.9s1.9-0.8,1.9-1.9l2.3-27.3l-2.3-42.3
-                                                                    C-216,384.2-216.9,383.4-217.9,383.4z" />
-                                    <path d="M-154.4,359.3c-1.8,0-3.2,1.4-3.2,3.2l-1.2,65l1.2,26.1c0,1.8,1.5,3.2,3.2,3.2c1.8,0,3.2-1.5,3.2-3.2l1.4-26.1l-1.4-65
-                                                                    C-151.1,360.8-152.6,359.3-154.4,359.3z" />
-                                    <path d="M-197.1,368.9c-1.3,0-2.3,1-2.4,2.4l-1.8,56.3l1.8,26.9c0,1.3,1.1,2.3,2.4,2.3s2.3-1,2.4-2.4l2-26.9l-2-56.3
-                                                                    C-194.7,370-195.8,368.9-197.1,368.9z" />
-                                    <path
-                                        d="M-46.5,394c-4.3,0-8.4,0.9-12.2,2.4C-61.2,368-85,345.8-114,345.8c-7.1,0-14,1.4-20.1,3.8c-2.4,0.9-3,1.9-3,3.7v99.9
-                                                                    c0,1.9,1.5,3.5,3.4,3.7c0.1,0,86.7,0,87.3,0c17.4,0,31.5-14.1,31.5-31.5C-15,408.1-29.1,394-46.5,394z" />
-                                    <path d="M-143.6,353.2c-1.9,0-3.4,1.6-3.5,3.5l-1.4,70.9l1.4,25.7c0,1.9,1.6,3.4,3.5,3.4c1.9,0,3.4-1.6,3.5-3.5l1.5-25.8l-1.5-70.9
-                                                                    C-140.2,354.8-141.7,353.2-143.6,353.2z" />
-                                    <path d="M-186.5,366.8c-1.4,0-2.5,1.1-2.6,2.6l-1.6,58.2l1.6,26.7c0,1.4,1.2,2.6,2.6,2.6s2.5-1.1,2.6-2.6l1.8-26.7l-1.8-58.2
-                                                                    C-184,367.9-185.1,366.8-186.5,366.8z" />
-                                    <path d="M-175.9,368.1c-1.5,0-2.8,1.2-2.8,2.8l-1.5,56.7l1.5,26.5c0,1.6,1.3,2.8,2.8,2.8s2.8-1.2,2.8-2.8l1.7-26.5l-1.7-56.7
-                                                                    C-173.1,369.3-174.3,368.1-175.9,368.1z" />
-                                    <path d="M-165.2,369.9c-1.7,0-3,1.3-3,3l-1.4,54.7l1.4,26.3c0,1.7,1.4,3,3,3c1.7,0,3-1.3,3-3l1.5-26.3l-1.5-54.7
-                                                                    C-162.2,371.3-163.5,369.9-165.2,369.9z" />
-                                </g>
-                            </svg>
-                        </a>
-                        <a class="icon-link" href="https://instagram.com/temporal_sound" target="_blank" rel="noopener"
-                            aria-label="Temporal on Instagram">
-                            <!-- Instagram SVG -->
-                            <svg viewBox="0 0 24 24" aria-hidden="true">
-                                <path
-                                    d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.75-.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" />
-                            </svg>
-                        </a>
-                    </nav>
-                </div>
-                <h1 class="event-title">Sonido</h1>
-                <p class="event-subtitle">A special event by Temporal</p>
-                <p class="event-date">Saturday 12/6</p>
+                    <a class="icon-link" href="https://instagram.com/temporal_sound" target="_blank" rel="noopener"
+                        aria-label="Temporal on Instagram">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.75-.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" />
+                        </svg>
+                    </a>
+                </nav>
             </header>
 
             <main>
-                <section class="hero">
-                    <p>
-                        <strong>Lovers & Friends,</strong>
+                <!-- Hero -->
+                <section class="sonido-hero reveal">
+                    <p class="eyebrow">An archive <span class="dot">✦</span> Past show</p>
+                    <h1 class="home-tagline sonido-hero-title">Sonido II</h1>
+                    <p class="sonido-hero-meta">
+                        Sat, Dec 6, 2025
+                        <span class="sep">·</span> The Blind Liger
+                        <span class="sep">·</span> Portland
                     </p>
-                    <p>
-                        <i>Behind an unmarked door in Portland, the Blind Liger lies in wait.
-                            A secretive beast both savage and sweet; only the bravest are invited into its lair. If you've found your way here,
-                            consider this your key.</i>
+                </section>
+
+                <!-- Banner image -->
+                <figure class="sonido-banner reveal">
+                    <picture>
+                        <source srcset="banner.webp" type="image/webp">
+                        <img src="banner.jpg" alt="Sonido II banner — Temporal at The Blind Liger" />
+                    </picture>
+                </figure>
+
+                <!-- Story -->
+                <section class="about reveal">
+                    <p class="pull-quote">
+                        <span class="pull-quote-mark" aria-hidden="true">“</span>Behind an unmarked door in Portland,
+                        the Blind Liger lies in wait — a secretive beast both savage and&nbsp;sweet.<span
+                            class="pull-quote-mark close" aria-hidden="true">”</span>
                     </p>
-                    <p>
-                        Temporal presents the second edition of Sonido: a night devoted to sonic exploration. Extended sets from our resident
-                        DJ's will invite you to settle in to the flow of music, without rush or expectations. This party is a love letter to the
-                        collective spirit of late night dancefloors; to moments lost and found again.
+                    <div class="about-body">
+                        <p class="blurb">
+                            <strong>Lovers &amp; friends</strong> — Temporal presented the second edition of Sonido, a
+                            night devoted to sonic exploration. Extended sets from our resident DJs invited guests to
+                            settle into the flow of music, without rush or expectations. A love letter to the collective
+                            spirit of late-night dancefloors; to moments lost and&nbsp;found again.
                         </p>
-                        <p>
-                            To those who came before, you already know. For our dear newcomers: welcome to a space unlike any other in Portland.
-                            We invite you to step into the liger's den, and outside of the world for a moment. Come early, stay late, and enjoy
-                            the ride ✨
-                    </p>
-                </section>
-
-                <!-- Image Carousel -->
-                <section class="image-carousel">
-                    <div class="swiper gallery-swiper">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="img/1.jpg" alt="Venue photo 1" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="img/2.jpg" alt="Venue photo 2" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="img/3.jpg" alt="Venue photo 3" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="img/4.jpg" alt="Venue photo 4" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="img/5.jpg" alt="Venue photo 5" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="img/6.jpg" alt="Venue photo 6" />
-                            </div>
-                        </div>
-                        <!-- Navigation buttons -->
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                        <!-- Pagination -->
-                        <div class="swiper-pagination"></div>
                     </div>
                 </section>
 
-                <div class="event-details">
-                    <h3>Event Details</h3>
-                    <div class="flyer-container">
-                        <img src="flyer.jpeg" alt="Sonido event flyer" class="event-flyer" />
+                <!-- Photo gallery (native scroll-snap, no Swiper) -->
+                <section class="sonido-gallery reveal" aria-label="Photos from the night">
+                    <div class="section-head">
+                        <h2 class="section-title">Photos from the night</h2>
                     </div>
-                    <div class="event-details-content">
-                        <p><strong>Date:</strong> Saturday 12/6</p>
-                        <p><strong>Time:</strong> 9pm - late</p>
-                        <p><strong>Location:</strong> Location disclosed on day of the event</p>
-                        <p><strong>Access:</strong> Private invite</p>
-                        <p><strong>Capacity:</strong> Highly limited capacity</p>
-                        <p><strong>Special:</strong> Free wine & chocolate + special live set at 9 (come meet the crew 🖤)</p>
-                        <p><strong>Included:</strong> 1 drink included with ticket</p>
-                        <p>This is an exclusive, invitation-only event. RSVP below to secure your spot.</p>
+                    <div class="sonido-gallery-track">
+                        <img src="img/1.jpg" alt="Venue photo 1" loading="lazy" />
+                        <img src="img/2.jpg" alt="Venue photo 2" loading="lazy" />
+                        <img src="img/3.jpg" alt="Venue photo 3" loading="lazy" />
+                        <img src="img/4.jpg" alt="Venue photo 4" loading="lazy" />
+                        <img src="img/5.jpg" alt="Venue photo 5" loading="lazy" />
+                        <img src="img/6.jpg" alt="Venue photo 6" loading="lazy" />
                     </div>
-                </div>
+                </section>
 
-                <hr class="section-sep" />
+                <!-- Event details + flyer -->
+                <section class="sonido-recap reveal">
+                    <div class="section-head">
+                        <h2 class="section-title">Details</h2>
+                    </div>
+                    <div class="sonido-recap-grid">
+                        <a class="sonido-recap-flyer" href="flyer.jpeg" target="_blank" rel="noopener"
+                            aria-label="Open the Sonido II flyer at full size">
+                            <img src="flyer.jpeg" alt="Sonido II flyer" loading="lazy" />
+                        </a>
+                        <ul class="sonido-recap-list">
+                            <li><span>Date</span><span>Saturday, December 6, 2025</span></li>
+                            <li><span>Time</span><span>9pm — late</span></li>
+                            <li><span>Venue</span><span>The Blind Liger, Portland</span></li>
+                            <li><span>Lineup</span><span>Resident DJs · Live opener</span></li>
+                            <li><span>Capacity</span><span>Limited &amp; invite-only</span></li>
+                            <li><span>Vibe</span><span>Free wine &amp; chocolate · special live set at&nbsp;9pm</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
 
-                <div class="cta-card">
-                    <form id="join"
-                        action="https://script.google.com/macros/s/AKfycbzLXD8WmlGX688ITOeoSx1USBp6WhDLTSGj8yn_-pt1AV4Uyhd103TvGhue3CPga_NT/exec"
-                        method="POST" target="join_target">
-                        <div class="rsvp-container">
-                            <div class="rsvp-form">
-                                <input class="input" id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email"
-                                    required />
-                                <input class="input" id="phone" name="phone" type="tel" placeholder="(###) ###-#### (optional)"
-                                    autocomplete="tel" />
-                                <button class="submit" type="submit">RSVP</button>
+                <!-- Get on the list -->
+                <section class="join-section reveal" id="join-section">
+                    <div class="join-intro">
+                        <p class="eyebrow">Stay close <span class="dot">✦</span></p>
+                        <h2 class="join-heading">Be there next time</h2>
+                        <p class="join-sub">
+                            Drop your email or number and we'll find you when the next one is&nbsp;brewing.
+                        </p>
+                    </div>
+                    <div class="cta-card">
+                        <form id="join"
+                            action="https://script.google.com/macros/s/AKfycbzLXD8WmlGX688ITOeoSx1USBp6WhDLTSGj8yn_-pt1AV4Uyhd103TvGhue3CPga_NT/exec"
+                            method="POST" target="join_target">
+                            <div class="row row-primary">
+                                <label class="field" for="email">
+                                    <span class="field-label">Email</span>
+                                    <input class="input" id="email" name="email" type="email"
+                                        placeholder="you@example.com" autocomplete="email" />
+                                </label>
+                                <label class="field" for="phone">
+                                    <span class="field-label">Phone</span>
+                                    <input class="input" id="phone" name="phone" type="tel"
+                                        placeholder="(###) ###-####" autocomplete="tel" />
+                                </label>
                             </div>
-                            <p class="fineprint"><strong>Note:</strong> This RSVP is not a ticket. You still need to purchase a ticket through RA.
+                            <div class="row">
+                                <label class="field" for="name">
+                                    <span class="field-label">Name <span class="field-hint">(optional)</span></span>
+                                    <input class="input" id="name" name="name" type="text"
+                                        placeholder="What should we call you?" autocomplete="name" />
+                                </label>
+                            </div>
+                            <input type="hidden" id="note" name="note" value="From /sonido/ archive page" />
+                            <input type="hidden" id="ref" name="ref" />
+                            <input type="hidden" id="ua" name="ua" />
+                            <button class="submit btn btn-primary btn-block" type="submit">
+                                <span>Stay in touch</span>
+                                <span class="btn-glyph" aria-hidden="true">→</span>
+                            </button>
+                            <p id="form-error" class="fineprint form-error" role="alert" aria-live="polite"
+                                style="display:none;">
+                                Please provide at least your email or phone number to stay in touch.
                             </p>
+                            <p class="fineprint">
+                                We'll only message about Temporal events. We never share or sell your info. Unsubscribe
+                                anytime.
+                            </p>
+                        </form>
+                        <div id="thankyou" style="display:none">
+                            <p class="thankyou-mark" aria-hidden="true">✦</p>
+                            <p class="blurb thankyou-text">You're in. We'll stay in touch.</p>
+                            <button id="again" type="button" class="submit btn btn-ghost">Submit again</button>
                         </div>
-                        <input type="hidden" id="note" name="note" value="Sonido 2 RSVP" />
-                        <input type="hidden" id="ref" name="ref" />
-                        <input type="hidden" id="ua" name="ua" />
-                        <p id="form-error" class="fineprint" role="alert" aria-live="polite" style="display:none; color: #ffb4a8;">Please
-                            provide your email to RSVP.</p>
-                        <p class="fineprint">We'll only reach out about Temporal events. We respect your privacy — we
-                            will never sell or share your data for any reason. Unsubscribe anytime.</p>
-                    </form>
-                    <div id="thankyou" style="display:none; text-align:center">
-                        <p class="blurb">Thanks — you're on the list! <a href="https://ra.co/events/2306541">Get your ticket at RA</a>.</p>
-                        <button id="again" type="button" class="submit">RSVP again</button>
+                        <iframe id="join_target" name="join_target" tabindex="-1" aria-hidden="true"
+                            style="display:none"></iframe>
                     </div>
-                    <iframe id="join_target" name="join_target" tabindex="-1" aria-hidden="true" style="display: none"></iframe>
-                </div>
+                </section>
             </main>
 
             <footer>
-                <div>© <span id="y"></span> Temporal</div>
+                <div class="footer-mark" aria-hidden="true">✦ ✦ ✦</div>
+                <p class="footer-tag">A Portland-based artist collective</p>
+                <nav class="footer-socials" aria-label="Social links">
+                    <a class="icon-link" href="https://soundcloud.com/temporal_sound" target="_blank" rel="noopener"
+                        aria-label="Temporal on SoundCloud">
+                        <svg viewBox="-271 345.8 256 111.2" aria-hidden="true">
+                            <g>
+                                <path d="M-238.4,398.1c-0.8,0-1.4,0.6-1.5,1.5l-2.3,28l2.3,27.1c0.1,0.8,0.7,1.5,1.5,1.5c0.8,0,1.4-0.6,1.5-1.5l2.6-27.1l-2.6-28C-237,398.7-237.7,398.1-238.4,398.1z" />
+                                <path d="M-228.2,399.9c-0.9,0-1.7,0.7-1.7,1.7l-2.1,26l2.1,27.3c0.1,1,0.8,1.7,1.7,1.7c0.9,0,1.6-0.7,1.7-1.7l2.4-27.3l-2.4-26C-226.6,400.6-227.3,399.9-228.2,399.9z" />
+                                <path d="M-258.6,403.5c-0.5,0-1,0.4-1.1,1l-2.5,23l2.5,22.5c0.1,0.6,0.5,1,1.1,1c0.5,0,1-0.4,1.1-1l2.9-22.5l-2.9-23C-257.7,404-258.1,403.5-258.6,403.5z" />
+                                <path d="M-268.1,412.3c-0.5,0-1,0.4-1,1l-1.9,14.3l1.9,14c0.1,0.6,0.5,1,1,1s0.9-0.4,1-1l2.2-14l-2.2-14.2C-267.2,412.8-267.6,412.3-268.1,412.3z" />
+                                <path d="M-207.5,373.5c-1.2,0-2.1,0.9-2.2,2.1l-1.9,52l1.9,27.2c0.1,1.2,1,2.1,2.2,2.1s2.1-0.9,2.2-2.1l2.1-27.2l-2.1-52C-205.4,374.4-206.4,373.5-207.5,373.5z" />
+                                <path d="M-248.6,399c-0.7,0-1.2,0.5-1.3,1.3l-2.4,27.3l2.4,26.3c0.1,0.7,0.6,1.3,1.3,1.3c0.7,0,1.2-0.5,1.3-1.2l2.7-26.3l-2.7-27.3C-247.4,399.6-247.9,399-248.6,399z" />
+                                <path d="M-217.9,383.4c-1,0-1.9,0.8-1.9,1.9l-2,42.3l2,27.3c0.1,1.1,0.9,1.9,1.9,1.9s1.9-0.8,1.9-1.9l2.3-27.3l-2.3-42.3C-216,384.2-216.9,383.4-217.9,383.4z" />
+                                <path d="M-154.4,359.3c-1.8,0-3.2,1.4-3.2,3.2l-1.2,65l1.2,26.1c0,1.8,1.5,3.2,3.2,3.2c1.8,0,3.2-1.5,3.2-3.2l1.4-26.1l-1.4-65C-151.1,360.8-152.6,359.3-154.4,359.3z" />
+                                <path d="M-197.1,368.9c-1.3,0-2.3,1-2.4,2.4l-1.8,56.3l1.8,26.9c0,1.3,1.1,2.3,2.4,2.3s2.3-1,2.4-2.4l2-26.9l-2-56.3C-194.7,370-195.8,368.9-197.1,368.9z" />
+                                <path d="M-46.5,394c-4.3,0-8.4,0.9-12.2,2.4C-61.2,368-85,345.8-114,345.8c-7.1,0-14,1.4-20.1,3.8c-2.4,0.9-3,1.9-3,3.7v99.9c0,1.9,1.5,3.5,3.4,3.7c0.1,0,86.7,0,87.3,0c17.4,0,31.5-14.1,31.5-31.5C-15,408.1-29.1,394-46.5,394z" />
+                                <path d="M-143.6,353.2c-1.9,0-3.4,1.6-3.5,3.5l-1.4,70.9l1.4,25.7c0,1.9,1.6,3.4,3.5,3.4c1.9,0,3.4-1.6,3.5-3.5l1.5-25.8l-1.5-70.9C-140.2,354.8-141.7,353.2-143.6,353.2z" />
+                                <path d="M-186.5,366.8c-1.4,0-2.5,1.1-2.6,2.6l-1.6,58.2l1.6,26.7c0,1.4,1.2,2.6,2.6,2.6s2.5-1.1,2.6-2.6l1.8-26.7l-1.8-58.2C-184,367.9-185.1,366.8-186.5,366.8z" />
+                                <path d="M-175.9,368.1c-1.5,0-2.8,1.2-2.8,2.8l-1.5,56.7l1.5,26.5c0,1.6,1.3,2.8,2.8,2.8s2.8-1.2,2.8-2.8l1.7-26.5l-1.7-56.7C-173.1,369.3-174.3,368.1-175.9,368.1z" />
+                                <path d="M-165.2,369.9c-1.7,0-3,1.3-3,3l-1.4,54.7l1.4,26.3c0,1.7,1.4,3,3,3c1.7,0,3-1.3,3-3l1.5-26.3l-1.5-54.7C-162.2,371.3-163.5,369.9-165.2,369.9z" />
+                            </g>
+                        </svg>
+                    </a>
+                    <a class="icon-link" href="https://instagram.com/temporal_sound" target="_blank" rel="noopener"
+                        aria-label="Temporal on Instagram">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.75-.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" />
+                        </svg>
+                    </a>
+                </nav>
+                <p class="footer-meta">
+                    © <span id="y"></span> Temporal <span class="sep">·</span> Made with love in Portland
+                </p>
+                <div class="footer-iso" aria-hidden="true">
+                    <img src="../brand/logo.svg" alt="" />
+                </div>
             </footer>
         </div>
     </div>
 
-    <!-- Floating Action Button -->
-    <button class="fab" id="fab" aria-label="Go to stay in touch form" title="Stay in touch">
-        ⏷
-    </button>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="/script.js?v=20251116163313"></script>
+    <script src="../script.js?v=20260512770000"></script>
 </body>
 
 </html>
