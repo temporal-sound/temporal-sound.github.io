@@ -1791,7 +1791,7 @@ footer .sep {
     border-top-left-radius: var(--r-xl);
     border-top-right-radius: var(--r-xl);
     overflow: hidden;
-    background: color-mix(in srgb, var(--night) 60%, transparent);
+    background: color-mix(in srgb, var(--night) 80%, transparent);
     aspect-ratio: 4 / 5;
     max-height: 50vh;
     transition: opacity 0.2s ease;
@@ -1932,7 +1932,27 @@ footer .sep {
 }
 
 @media (max-width: 640px) {
+    .modal-content {
+        width: calc(100% - 24px);
+        max-width: 460px;
+        max-height: calc(100dvh - 24px);
+    }
+
+    .modal-flyer {
+        aspect-ratio: 4 / 5;
+        max-height: 42vh;
+    }
+
+    /* On mobile, show the full flyer (no crop) — bg fills any letterbox */
+    .modal-flyer img {
+        object-fit: contain;
+    }
+
     .modal-body { padding: 22px; }
+
+    .modal-event-description {
+        font-size: var(--text-sm);
+    }
 }
 
 /* ============================================================
