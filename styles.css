@@ -320,6 +320,7 @@ h1, h2, h3, h4, .section-title, .join-heading, .event-featured-title,
 .ann-bar-track {
     display: inline-flex;
     white-space: nowrap;
+    gap: 14px;
     animation: ann-marquee 70s linear infinite;
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
@@ -334,7 +335,6 @@ h1, h2, h3, h4, .section-title, .join-heading, .event-featured-title,
     display: inline-flex;
     align-items: center;
     gap: 14px;
-    padding: 0 28px;
 }
 
 .ann-bar-title {
@@ -395,10 +395,10 @@ h1, h2, h3, h4, .section-title, .join-heading, .event-featured-title,
     .ann-bar-track {
         font-size: 12px;
         animation-duration: 55s;
+        gap: 11px;
     }
     .ann-bar-chunk {
         gap: 11px;
-        padding: 0 22px;
     }
 }
 
