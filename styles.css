@@ -2447,3 +2447,28 @@ footer .sep {
     color: color-mix(in srgb, var(--stone) 88%, transparent);
     font-size: var(--text-sm);
 }
+
+/* /caleesi/ — portrait flyer as the page's visual hero */
+.caleesi-flyer-hero {
+    margin: 0 auto 64px;
+    padding: 0;
+    max-width: 380px;
+    width: 100%;
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    background: color-mix(in srgb, var(--night) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--stone) 12%, transparent);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+
+.caleesi-flyer-hero img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.caleesi-recap-list {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
