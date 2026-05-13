@@ -1990,10 +1990,29 @@ footer .sep {
         object-fit: cover;
     }
 
-    .modal-body { padding: 22px; }
+    .modal-body {
+        padding: 22px 22px 0;
+    }
 
     .modal-event-description {
         font-size: var(--text-sm);
+        margin-bottom: 0;
+    }
+
+    /* Keep RSVP above the fold on mobile — sticks to bottom of
+       modal-content scroll viewport so it's visible regardless of
+       flyer height or Safari URL bar state. */
+    .modal-actions {
+        position: sticky;
+        bottom: 0;
+        margin: 20px -22px 0;
+        padding: 22px;
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            color-mix(in srgb, var(--night) 70%, transparent) 35%,
+            var(--night) 75%
+        );
     }
 }
 
