@@ -893,14 +893,36 @@ form .btn-block {
     margin: 0 auto;
 }
 
-.past-strip-label {
+.past-strip-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 14px;
     margin: 0 0 14px;
+    flex-wrap: wrap;
+}
+
+.past-strip-label {
+    margin: 0;
     text-transform: uppercase;
-    letter-spacing: 0.28em;
-    font-size: 11px;
+    letter-spacing: var(--tracking-wider);
+    font-size: var(--text-micro);
     color: var(--ocher);
-    font-weight: 600;
-    text-align: center;
+    font-weight: var(--weight-semibold);
+}
+
+.past-strip-link {
+    font-size: var(--text-micro);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: color-mix(in srgb, var(--stone) 60%, transparent);
+    text-decoration: none;
+    font-weight: var(--weight-semibold);
+    transition: color 0.2s ease;
+}
+
+.past-strip-link:hover {
+    color: var(--ocher);
 }
 
 .past-strip-track {
@@ -2471,4 +2493,212 @@ footer .sep {
     max-width: 520px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* ============================================================
+   /events/ — full archive listing page
+   ============================================================ */
+.events-hero {
+    padding: 24px 0 40px;
+    text-align: center;
+}
+
+.events-hero-title {
+    margin: 12px auto 18px;
+}
+
+.events-hero-meta {
+    margin: 0 auto;
+    max-width: 540px;
+    font-size: var(--text-md);
+    color: color-mix(in srgb, var(--stone) 78%, transparent);
+}
+
+.events-listing {
+    margin: 0 auto 80px;
+    max-width: 880px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 640px) {
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.event-card {
+    display: flex;
+    flex-direction: column;
+    background: color-mix(in srgb, var(--night-2) 70%, transparent);
+    border: 1px solid color-mix(in srgb, var(--stone) 12%, transparent);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s var(--ease-out-quart),
+                border-color 0.25s var(--ease-out-quart),
+                background 0.25s var(--ease-out-quart);
+}
+
+a.event-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--ocher) 50%, transparent);
+    background: color-mix(in srgb, var(--ocher) 10%, var(--night-2));
+}
+
+a.event-card:hover .event-card-glyph {
+    transform: translate(2px, -2px);
+    opacity: 1;
+}
+
+a.event-card:hover .event-card-image img:not(.event-card-mark) {
+    transform: scale(1.04);
+}
+
+.event-card-image {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--terracotta) 60%, var(--night)) 0%,
+        color-mix(in srgb, var(--ocher) 40%, var(--night)) 100%);
+    border-bottom: 1px solid color-mix(in srgb, var(--stone) 8%, transparent);
+}
+
+.event-card-image img:not(.event-card-mark) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.5s var(--ease-out-quart);
+}
+
+.event-card-mark {
+    width: 42%;
+    height: auto;
+    opacity: 0.85;
+    filter: brightness(0) invert(1);
+}
+
+/* Color variants for placeholder images (rotate per series feel) */
+.event-card-image-1 {
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--terracotta) 60%, var(--night)) 0%,
+        color-mix(in srgb, var(--ocher) 50%, var(--night)) 100%);
+}
+.event-card-image-2 {
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--lavender) 35%, var(--night)) 0%,
+        color-mix(in srgb, var(--terracotta) 35%, var(--night)) 100%);
+}
+.event-card-image-3 {
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--grass) 60%, var(--night)) 0%,
+        color-mix(in srgb, var(--ocher) 35%, var(--night)) 100%);
+}
+.event-card-image-4 {
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--ocher) 45%, var(--night)) 0%,
+        color-mix(in srgb, var(--lavender) 30%, var(--night)) 100%);
+}
+.event-card-image-5 {
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--lavender) 40%, var(--night)) 0%,
+        color-mix(in srgb, var(--grass) 35%, var(--night)) 100%);
+}
+.event-card-image-6 {
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--terracotta) 45%, var(--night)) 0%,
+        color-mix(in srgb, var(--lavender) 35%, var(--night)) 100%);
+}
+
+.event-card-body {
+    padding: 18px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.event-card-series {
+    font-size: var(--text-micro);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--ocher);
+    font-weight: var(--weight-semibold);
+}
+
+.event-card-title {
+    margin: 2px 0 2px;
+    font-family: var(--font-display);
+    font-weight: var(--weight-semibold);
+    font-size: var(--text-lg);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--stone);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.event-card-glyph {
+    font-size: var(--text-sm);
+    color: var(--ocher);
+    opacity: 0.7;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.event-card-date {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: color-mix(in srgb, var(--stone) 78%, transparent);
+    font-weight: var(--weight-medium);
+}
+
+.event-card-lineup {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: color-mix(in srgb, var(--stone) 70%, transparent);
+    line-height: var(--leading-snug);
+}
+
+.event-card-type {
+    margin: 4px 0 0;
+    font-size: var(--text-xs);
+    color: color-mix(in srgb, var(--stone) 50%, transparent);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    line-height: var(--leading-snug);
+}
+
+.event-card-lineup .sep,
+.event-card-type .sep {
+    color: var(--ocher);
+    margin: 0 0.3em;
+    opacity: 0.6;
+}
+
+.events-note {
+    margin: 36px auto 0;
+    text-align: center;
+    font-size: var(--text-sm);
+    color: color-mix(in srgb, var(--stone) 60%, transparent);
+    max-width: 560px;
+}
+
+.events-note a {
+    color: var(--ocher);
+    text-underline-offset: 3px;
+}
+
+.events-note a:hover {
+    color: color-mix(in srgb, var(--ocher) 80%, transparent);
 }
