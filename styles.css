@@ -366,12 +366,22 @@ h1, h2, h3, h4, .section-title, .join-heading, .event-featured-title,
     font-size: 11px;
 }
 
-/* After the event ends — hide show info, keep only genre tags scrolling */
+/* After the event ends — hide show info, keep only genre tags scrolling.
+   Tail separators stay visible so the looped tags read as one rhythm
+   instead of three islands with empty gaps. */
 .ann-bar-ended .ann-bar-title,
 .ann-bar-ended .ann-bar-date,
 .ann-bar-ended .ann-bar-countdown,
-.ann-bar-ended .ann-bar-sep {
+.ann-bar-ended .ann-bar-sep:not(.ann-bar-tail-sep) {
     display: none;
+}
+
+.ann-bar-ended .ann-bar-tags {
+    letter-spacing: var(--tracking-wider);
+}
+
+.ann-bar-ended .ann-bar-tail-sep {
+    margin: 0 6px;
 }
 
 @keyframes ann-marquee {
