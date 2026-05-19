@@ -1,6 +1,357 @@
 // Mark JS-on so the reveal styles only kick in when JS is available (no FOUC)
 document.documentElement.classList.add("js-on");
 
+// =====================================================================
+// Shows — single source of truth for the homepage event UI.
+// Add a new show at the top; the featured card, past strip, modal, and
+// ticker auto-roll based on today's date. Once a show's endISO passes,
+// it moves from "Next show" to the past strip automatically.
+// =====================================================================
+const SHOWS = [
+  {
+    id: "may16-2026",
+    title: "Antaares · Bawab · Samaha",
+    titleLong: "Temporal Presents: Antaares, Bawab & Samaha",
+    startISO: "2026-05-16T21:00:00-07:00",
+    endISO: "2026-05-17T03:00:00-07:00",
+    dateLabel: "May 16, 2026",
+    dateShort: "Sat May 16, 9pm",
+    location: "Secret Location, Portland",
+    flyer: "img/flyer-may16.jpg",
+    flyerAlt:
+      "Temporal Presents: Antaares, Bawab & Samaha — Sat May 16, 9pm to late",
+    pastImage: "img/flyer-may16.jpg",
+    pastLineup: "Antaares · Bawab · Samaha",
+    partifulUrl: "https://partiful.com/e/MT7tOg8oq3GxbgAypDLC",
+    archiveUrl: null,
+    blurb:
+      "Inaugural night of a new artist series — deep, hypnotic, groovy, psychedelic, percussive, emotional. Antaares brings trippy textured grooves; Bawab leans into rhythm-driven club; Samaha opens warm.",
+    modalBlurb:
+      "We're launching a new series, bringing in artists from farther afield who are helping shape the deep, hypnotic, groovy, psychedelic sound we love. Antaares joins from CDMX, Bawab from LA, and Samaha from Seattle.",
+    tags: ["$30 sliding", "120 cap", "RSVP required"],
+  },
+  {
+    id: "sonido-iv",
+    title: "Sonido IV",
+    startISO: "2026-04-04T21:00:00-07:00",
+    endISO: "2026-04-05T03:00:00-07:00",
+    dateLabel: "Apr 4, 2026",
+    pastImage: "img/sonido-iv.jpg",
+    pastLineup: "Sebakhy · MORO · Hannounah · A-Kintero",
+    partifulUrl: "https://partiful.com/e/cOZuUSU5e2WDSzHCkX9o",
+    archiveUrl: null,
+  },
+  {
+    id: "sonido-iii",
+    title: "Sonido III",
+    startISO: "2026-01-31T21:00:00-08:00",
+    dateLabel: "Jan 31, 2026",
+    pastImage: "img/sonido-iii.jpg?v=2",
+    pastLineup: "Ale Vizio · Martin · MORO",
+    partifulUrl: "https://partiful.com/e/4eA6ajWobnp2v8MOCEsF",
+    archiveUrl: null,
+  },
+  {
+    id: "sonido-ii",
+    title: "Sonido II",
+    startISO: "2025-12-06T21:00:00-08:00",
+    dateLabel: "Dec 6, 2025",
+    pastImage: "img/sonido-ii.jpg?v=3",
+    pastLineup: "Resident DJs · Live opener",
+    partifulUrl: null,
+    archiveUrl: "sonido/",
+  },
+  {
+    id: "caleesi-kreis",
+    title: "Caleesi b2b Kreis",
+    startISO: "2025-11-15T21:00:00-08:00",
+    dateLabel: "Nov 2025",
+    pastImage: "img/caleesi-kreis.jpg",
+    pastLineup: "Special b2b set",
+    partifulUrl: null,
+    archiveUrl: "caleesi/",
+  },
+];
+
+function getFeaturedAndPast() {
+  const now = Date.now();
+  const upcoming = SHOWS.filter(
+    (s) => new Date(s.endISO || s.startISO).getTime() > now
+  ).sort((a, b) => new Date(a.startISO) - new Date(b.startISO));
+
+  const past = SHOWS.filter(
+    (s) => new Date(s.endISO || s.startISO).getTime() <= now
+  ).sort((a, b) => new Date(b.startISO) - new Date(a.startISO));
+
+  if (upcoming.length > 0) {
+    return { featured: upcoming[0], pastList: past, isUpcoming: true };
+  }
+  return {
+    featured: past[0] || null,
+    pastList: past.slice(1),
+    isUpcoming: false,
+  };
+}
+
+function formatTimeOfDay(date) {
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  })
+    .format(date)
+    .replace(/:00\s/, "")
+    .replace(/\s/, "")
+    .toLowerCase();
+}
+
+function renderFeaturedCard(show, isUpcoming) {
+  const article = document.querySelector(".event-featured");
+  if (!article || !show) return;
+
+  const href = show.partifulUrl || show.archiveUrl || "#";
+  const isExternal = !!show.partifulUrl;
+
+  const flyerLink = article.querySelector(".event-featured-flyer");
+  if (flyerLink) {
+    flyerLink.href = href;
+    if (isExternal) {
+      flyerLink.target = "_blank";
+      flyerLink.rel = "noopener";
+    } else {
+      flyerLink.removeAttribute("target");
+      flyerLink.removeAttribute("rel");
+    }
+    flyerLink.setAttribute(
+      "aria-label",
+      `View flyer for ${show.title}${isExternal ? " on Partiful" : ""}`
+    );
+    const img = flyerLink.querySelector("img");
+    if (img) {
+      img.src = show.flyer || show.pastImage;
+      img.alt = show.flyerAlt || show.title;
+    }
+  }
+
+  const label = article.querySelector(".event-featured-label");
+  if (label) {
+    const labelText = isUpcoming ? "Next show" : "Latest";
+    label.innerHTML = `${labelText} <span class="sep">·</span> ${show.dateLabel}`;
+  }
+
+  const title = article.querySelector(".event-featured-title");
+  if (title) {
+    title.innerHTML = show.title.replace(
+      / · /g,
+      ' <span class="sep">·</span> '
+    );
+  }
+
+  const meta = article.querySelector(".event-featured-meta");
+  if (meta) {
+    const d = new Date(show.startISO);
+    const day = new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(d);
+    const time = formatTimeOfDay(d);
+    const parts = [day, time, show.location].filter(Boolean);
+    meta.innerHTML = parts.join(' <span class="sep">·</span> ');
+  }
+
+  const blurb = article.querySelector(".event-featured-blurb");
+  if (blurb) {
+    if (show.blurb) {
+      blurb.textContent = show.blurb;
+      blurb.style.display = "";
+    } else {
+      blurb.style.display = "none";
+    }
+  }
+
+  const tags = article.querySelector(".event-featured-tags");
+  if (tags) {
+    if (isUpcoming && Array.isArray(show.tags) && show.tags.length) {
+      tags.innerHTML = show.tags.map((t) => `<li>${t}</li>`).join("");
+      tags.style.display = "";
+    } else {
+      tags.style.display = "none";
+    }
+  }
+
+  const cta = article.querySelector(".btn-primary");
+  if (cta) {
+    if (show.partifulUrl) {
+      cta.href = show.partifulUrl;
+      cta.target = "_blank";
+      cta.rel = "noopener";
+      cta.innerHTML = `${isUpcoming ? "RSVP" : "View"} on Partiful <span class="btn-glyph" aria-hidden="true">→</span>`;
+      cta.style.display = "";
+    } else if (show.archiveUrl) {
+      cta.href = show.archiveUrl;
+      cta.removeAttribute("target");
+      cta.removeAttribute("rel");
+      cta.innerHTML = `See archive <span class="btn-glyph" aria-hidden="true">→</span>`;
+      cta.style.display = "";
+    } else {
+      cta.style.display = "none";
+    }
+  }
+}
+
+function renderPastStrip(shows) {
+  const track = document.querySelector(".past-strip-track");
+  if (!track) return;
+
+  track.innerHTML = shows
+    .map((show) => {
+      const href = show.partifulUrl || show.archiveUrl || "#";
+      const external = !!show.partifulUrl;
+      const titleHtml = show.title.replace(
+        / · /g,
+        ' <span class="sep">·</span> '
+      );
+      return `
+            <a class="past-card" href="${href}"${external ? ' target="_blank" rel="noopener"' : ""}>
+              <div class="past-card-image" aria-hidden="true">
+                <img src="${show.pastImage}" alt="" />
+              </div>
+              <div class="past-card-text">
+                <span class="past-card-date">${show.dateLabel}</span>
+                <h4 class="past-card-title">${titleHtml} <span class="past-card-glyph" aria-hidden="true">↗</span></h4>
+                <p class="past-card-lineup">${show.pastLineup || ""}</p>
+              </div>
+            </a>`;
+    })
+    .join("");
+}
+
+function renderTicker(show) {
+  const bar = document.getElementById("annBar");
+  if (!bar) return;
+
+  if (!show) {
+    bar.classList.add("ann-bar-ended");
+    bar.removeAttribute("href");
+    bar.removeAttribute("target");
+    bar.removeAttribute("rel");
+    bar.setAttribute("aria-label", "Temporal — Portland artist collective");
+    return;
+  }
+
+  if (show.partifulUrl) {
+    bar.href = show.partifulUrl;
+    bar.target = "_blank";
+    bar.rel = "noopener";
+  } else if (show.archiveUrl) {
+    bar.href = show.archiveUrl;
+    bar.removeAttribute("target");
+    bar.removeAttribute("rel");
+  }
+  bar.setAttribute(
+    "aria-label",
+    `Next show: ${show.title}${show.partifulUrl ? " — RSVP on Partiful" : ""}`
+  );
+
+  const d = new Date(show.startISO);
+  const day = new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(d);
+  const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(d);
+  const dayNum = d.getDate();
+  const time = formatTimeOfDay(d);
+  const dateText = show.dateShort || `${day} ${month} ${dayNum}, ${time}`;
+  const tags = "deep · driving · soulful · hypnotic · groovy · psychedelic";
+
+  const chunkHtml = (ariaHidden) => `
+        <div class="ann-bar-chunk"${ariaHidden ? ' aria-hidden="true"' : ""}>
+          <span class="ann-bar-title">${show.title}</span>
+          <span class="ann-bar-sep" aria-hidden="true">✦</span>
+          <span class="ann-bar-date">${dateText}</span>
+          <span class="ann-bar-sep" aria-hidden="true">✦</span>
+          <span class="ann-bar-date">${show.location || ""}</span>
+          <span class="ann-bar-sep" aria-hidden="true">✦</span>
+          <span class="ann-bar-countdown" data-event-start="${show.startISO}" data-event-end="${show.endISO || show.startISO}">In —</span>
+          <span class="ann-bar-sep" aria-hidden="true">✦</span>
+          <span class="ann-bar-tags">${tags}</span>
+          <span class="ann-bar-sep" aria-hidden="true">✦</span>
+        </div>`;
+
+  const track = bar.querySelector(".ann-bar-track");
+  if (track) {
+    track.innerHTML = chunkHtml(false) + chunkHtml(true) + chunkHtml(true);
+  }
+}
+
+function renderModal(show, isUpcoming) {
+  const modal = document.getElementById("eventModal");
+  if (!modal) return;
+  if (!isUpcoming || !show) {
+    modal.style.display = "none";
+    modal.dataset.suppress = "1";
+    return;
+  }
+  modal.style.display = "";
+  delete modal.dataset.suppress;
+
+  const flyerLink = modal.querySelector(".modal-flyer");
+  if (flyerLink && show.partifulUrl) {
+    flyerLink.href = show.partifulUrl;
+    flyerLink.setAttribute(
+      "aria-label",
+      `RSVP for ${show.title} on Partiful`
+    );
+    const img = flyerLink.querySelector("img");
+    if (img) {
+      img.src = show.flyer || show.pastImage;
+      img.alt = show.flyerAlt || show.title;
+    }
+  }
+
+  const title = modal.querySelector(".modal-event-title");
+  if (title) title.textContent = show.titleLong || show.title;
+
+  const date = modal.querySelector(".modal-event-date");
+  if (date) {
+    const d = new Date(show.startISO);
+    const weekday = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+    }).format(d);
+    const month = new Intl.DateTimeFormat("en-US", { month: "long" }).format(d);
+    const dayNum = d.getDate();
+    const ord = ((n) => {
+      if (n >= 11 && n <= 13) return "th";
+      switch (n % 10) {
+        case 1: return "st";
+        case 2: return "nd";
+        case 3: return "rd";
+        default: return "th";
+      }
+    })(dayNum);
+    const time = new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    })
+      .format(d)
+      .replace(" ", "")
+      .toLowerCase();
+    date.innerHTML = `${weekday}, ${month} ${dayNum}${ord} <span class="sep">·</span> ${time} <span class="sep">·</span> ${show.location || ""}`;
+  }
+
+  const desc = modal.querySelector(".modal-event-description");
+  if (desc) desc.textContent = show.modalBlurb || show.blurb || "";
+
+  const cta = modal.querySelector(".modal-cta");
+  if (cta && show.partifulUrl) {
+    cta.href = show.partifulUrl;
+    cta.textContent = "RSVP on Partiful";
+  }
+}
+
+function renderEvents() {
+  const { featured, pastList, isUpcoming } = getFeaturedAndPast();
+  renderFeaturedCard(featured, isUpcoming);
+  renderPastStrip(pastList);
+  renderTicker(isUpcoming ? featured : null);
+  renderModal(featured, isUpcoming);
+}
+
 // Animated film-grain noise — vanilla canvas, brand-colored, throttled to ~24fps for subtler shimmer
 (function () {
   const canvas = document.getElementById("noiseCanvas");
@@ -317,15 +668,10 @@ function initEventModal() {
 
   if (!modal) return;
 
-  // Event date - Saturday, May 16th, 2026 at 9pm PT
-  // Modal shows until event ends at 3am the next day (May 17th)
-  // For testing: uncomment the line below and comment the line above to test modal
-  // const eventDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // Tomorrow
-  const eventDate = new Date("2026-05-17T03:00:00-07:00");
-  const currentDate = new Date();
-
-  // Check if we should show the modal (before event date)
-  const shouldShowModal = currentDate < eventDate;
+  // Modal auto-shows only when renderModal populated it for an upcoming
+  // show (renderEvents runs first and tags the modal as suppressed when
+  // there's no upcoming show to feature).
+  const shouldShowModal = !modal.dataset.suppress;
 
   if (shouldShowModal) {
     // Show modal after a short delay for better UX
@@ -451,6 +797,10 @@ function initAnnouncementBar() {
 
 // Initialize Swiper gallery when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
+  // Populate featured card / past strip / ticker / modal from SHOWS data
+  // before any of the dependent inits run.
+  renderEvents();
+
   // Initialize event modal
   initEventModal();
 
