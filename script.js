@@ -227,12 +227,25 @@ function renderTicker(show) {
   const bar = document.getElementById("annBar");
   if (!bar) return;
 
+  const tags =
+    "deep · driving · soulful · hypnotic · groovy · psychedelic · percussive · emotional · warm · textured · ritual · cosmic";
+
   if (!show) {
     bar.classList.add("ann-bar-ended");
     bar.removeAttribute("href");
     bar.removeAttribute("target");
     bar.removeAttribute("rel");
     bar.setAttribute("aria-label", "Temporal — Portland artist collective");
+
+    const chunkHtml = (ariaHidden) => `
+          <div class="ann-bar-chunk"${ariaHidden ? ' aria-hidden="true"' : ""}>
+            <span class="ann-bar-tags">${tags}</span>
+            <span class="ann-bar-sep ann-bar-tail-sep" aria-hidden="true">✦</span>
+          </div>`;
+    const track = bar.querySelector(".ann-bar-track");
+    if (track) {
+      track.innerHTML = chunkHtml(false) + chunkHtml(true) + chunkHtml(true);
+    }
     return;
   }
 
@@ -256,7 +269,6 @@ function renderTicker(show) {
   const dayNum = d.getDate();
   const time = formatTimeOfDay(d);
   const dateText = show.dateShort || `${day} ${month} ${dayNum}, ${time}`;
-  const tags = "deep · driving · soulful · hypnotic · groovy · psychedelic";
 
   const chunkHtml = (ariaHidden) => `
         <div class="ann-bar-chunk"${ariaHidden ? ' aria-hidden="true"' : ""}>
@@ -269,7 +281,7 @@ function renderTicker(show) {
           <span class="ann-bar-countdown" data-event-start="${show.startISO}" data-event-end="${show.endISO || show.startISO}">In —</span>
           <span class="ann-bar-sep" aria-hidden="true">✦</span>
           <span class="ann-bar-tags">${tags}</span>
-          <span class="ann-bar-sep" aria-hidden="true">✦</span>
+          <span class="ann-bar-sep ann-bar-tail-sep" aria-hidden="true">✦</span>
         </div>`;
 
   const track = bar.querySelector(".ann-bar-track");
@@ -668,21 +680,10 @@ function initEventModal() {
 
   if (!modal) return;
 
-  // Modal auto-shows only when renderModal populated it for an upcoming
-  // show (renderEvents runs first and tags the modal as suppressed when
-  // there's no upcoming show to feature).
-  const shouldShowModal = !modal.dataset.suppress;
-
-  if (shouldShowModal) {
-    // Show modal after a short delay for better UX
-    setTimeout(() => {
-      modal.classList.add("show");
-      modal.setAttribute("aria-hidden", "false");
-      // Focus management for accessibility
-      const firstFocusable = modal.querySelector(".modal-cta");
-      firstFocusable?.focus();
-    }, 1000);
-  }
+  // Auto-popup intentionally disabled — the featured event card on the
+  // page is the canonical surface. The modal stays in the DOM (close,
+  // backdrop, escape, focus-trap wiring preserved) so it can still be
+  // opened programmatically in the future.
 
   // Close modal function
   function closeModal() {
