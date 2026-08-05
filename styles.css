@@ -327,7 +327,8 @@ h1, h2, h3, h4, .section-title, .join-heading, .event-featured-title,
     letter-spacing: 0.01em;
 }
 
-.ann-bar:hover .ann-bar-track {
+.ann-bar:hover .ann-bar-track,
+.ann-bar:focus-visible .ann-bar-track {
     animation-play-state: paused;
 }
 

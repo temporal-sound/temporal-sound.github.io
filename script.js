@@ -9,6 +9,30 @@ document.documentElement.classList.add("js-on");
 // =====================================================================
 const SHOWS = [
   {
+    id: "temporal-on-the-beach-2026",
+    title: "Temporal on the Beach",
+    titleLong: "Temporal on the Beach",
+    startISO: "2026-08-15T14:00:00-07:00",
+    endISO: "2026-08-15T22:00:00-07:00",
+    dateLabel: "Aug 15, 2026",
+    dateShort: "Sat Aug 15, 2–10pm",
+    timeLabel: "2–10pm",
+    location: "Columbia River · Location after RSVP",
+    flyer: "img/temporal-on-the-beach.jpg",
+    flyerAlt:
+      "Temporal on the Beach — open-air day party on Saturday, August 15 from 2pm to 10pm",
+    flyerFit: "contain",
+    pastImage: "img/temporal-on-the-beach.jpg",
+    pastLineup: "Hanndres · Martin Blech · MORO & Tyrus · Oshin · Sebakhy",
+    partifulUrl: "https://partiful.com/e/mvmLPqtElsUuZCi4ZElw",
+    archiveUrl: null,
+    blurb:
+      "A free midsummer day party on the banks of the Columbia River, with Hanndres, Martin Blech, MORO & Tyrus, Oshin, and Sebakhy.",
+    modalBlurb:
+      "Come dance, bask in the sun, and settle into a beautiful groove with us on the banks of the Columbia River. Bring drinks, snacks, a blanket, and your favorite river accoutrements.",
+    tags: ["Free", "Open-air day party", "RSVP for location"],
+  },
+  {
     id: "may16-2026",
     title: "Antaares · Bawab · Samaha",
     titleLong: "Temporal Presents: Antaares, Bawab & Samaha",
@@ -130,6 +154,7 @@ function renderFeaturedCard(show, isUpcoming) {
     if (img) {
       img.src = show.flyer || show.pastImage;
       img.alt = show.flyerAlt || show.title;
+      img.style.objectFit = show.flyerFit || "";
     }
   }
 
@@ -151,7 +176,7 @@ function renderFeaturedCard(show, isUpcoming) {
   if (meta) {
     const d = new Date(show.startISO);
     const day = new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(d);
-    const time = formatTimeOfDay(d);
+    const time = show.timeLabel || formatTimeOfDay(d);
     const parts = [day, time, show.location].filter(Boolean);
     meta.innerHTML = parts.join(' <span class="sep">·</span> ');
   }
@@ -312,6 +337,7 @@ function renderModal(show, isUpcoming) {
     if (img) {
       img.src = show.flyer || show.pastImage;
       img.alt = show.flyerAlt || show.title;
+      img.style.objectFit = show.flyerFit || "";
     }
   }
 
@@ -335,14 +361,16 @@ function renderModal(show, isUpcoming) {
         default: return "th";
       }
     })(dayNum);
-    const time = new Intl.DateTimeFormat("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    })
-      .format(d)
-      .replace(" ", "")
-      .toLowerCase();
+    const time =
+      show.timeLabel ||
+      new Intl.DateTimeFormat("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      })
+        .format(d)
+        .replace(" ", "")
+        .toLowerCase();
     date.innerHTML = `${weekday}, ${month} ${dayNum}${ord} <span class="sep">·</span> ${time} <span class="sep">·</span> ${show.location || ""}`;
   }
 
@@ -408,14 +436,43 @@ function renderEvents() {
   }
 
   const FRAME_INTERVAL = 42; // ~24fps for filmic shimmer
+  let animationFrameId = null;
   let last = 0;
+
   function loop(now) {
-    requestAnimationFrame(loop);
-    if (now - last < FRAME_INTERVAL) return;
-    last = now;
-    paintFrame();
+    animationFrameId = null;
+    if (document.hidden) return;
+
+    if (now - last >= FRAME_INTERVAL) {
+      last = now;
+      paintFrame();
+    }
+
+    animationFrameId = requestAnimationFrame(loop);
   }
-  requestAnimationFrame(loop);
+
+  function startAnimation() {
+    if (animationFrameId === null && !document.hidden) {
+      animationFrameId = requestAnimationFrame(loop);
+    }
+  }
+
+  function stopAnimation() {
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopAnimation();
+    } else {
+      startAnimation();
+    }
+  });
+
+  startAnimation();
 })();
 
 // Current year
@@ -677,26 +734,63 @@ function initEventModal() {
   const closeBtn = modal?.querySelector(".modal-close");
   const dismissBtn = modal?.querySelector(".modal-dismiss");
   const backdrop = modal?.querySelector(".modal-backdrop");
+  let openTimerId = null;
 
   if (!modal) return;
 
-  // Auto-popup intentionally disabled — the featured event card on the
-  // page is the canonical surface. The modal stays in the DOM (close,
-  // backdrop, escape, focus-trap wiring preserved) so it can still be
-  // opened programmatically in the future.
+  function cancelPendingOpen() {
+    if (openTimerId !== null) {
+      clearTimeout(openTimerId);
+      openTimerId = null;
+    }
+  }
 
-  // Close modal function
-  function closeModal() {
+  function closeModal({ restoreFocus = true } = {}) {
+    cancelPendingOpen();
     modal.classList.remove("show");
     modal.setAttribute("aria-hidden", "true");
-    // Return focus to body
-    document.body.focus();
+
+    if (restoreFocus) {
+      document.body.focus();
+    }
   }
 
-  // Dismiss modal
-  function dismissModal() {
-    closeModal();
+  // renderModal() suppresses the dialog when no upcoming show remains,
+  // so this reuses the same end-time gate as the featured card and ticker.
+  if (modal.dataset.suppress !== "1") {
+    // Show after a short delay so the page can settle first.
+    openTimerId = setTimeout(() => {
+      openTimerId = null;
+
+      // Safari can stall if a composited modal opens and steals focus while
+      // an external link is moving this page into the background.
+      if (
+        modal.dataset.suppress === "1" ||
+        document.visibilityState !== "visible"
+      ) {
+        return;
+      }
+
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+      modal.querySelector(".modal-cta")?.focus();
+    }, 1000);
   }
+
+  // Cancel before Safari begins opening a new tab, then hide without moving
+  // focus in the source tab once the link activates.
+  document
+    .querySelectorAll('a[href^="https://partiful.com/e/"]')
+    .forEach((link) => {
+      link.addEventListener("pointerdown", cancelPendingOpen);
+      link.addEventListener("click", () => closeModal({ restoreFocus: false }));
+    });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      closeModal({ restoreFocus: false });
+    }
+  });
 
   // Event listeners
   if (closeBtn) {
@@ -704,7 +798,7 @@ function initEventModal() {
   }
 
   if (dismissBtn) {
-    dismissBtn.addEventListener("click", dismissModal);
+    dismissBtn.addEventListener("click", closeModal);
   }
 
   if (backdrop) {
