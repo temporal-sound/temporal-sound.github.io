@@ -651,11 +651,6 @@ form.addEventListener("submit", async (e) => {
   form.style.display = "none";
   if (thankyou) {
     thankyou.style.display = "block";
-    const link = thankyou.querySelector("a");
-    if (link) {
-      console.log("Following link:", link.href);
-      window.location.href = link.href;
-    }
   }
 });
 
@@ -673,11 +668,6 @@ if (iframe) {
     if (thankyou) {
       thankyou.style.display = "block";
       celebrateThankyou(thankyou);
-      const link = thankyou.querySelector("a");
-      if (link) {
-        console.log("Following link:", link.href);
-        window.location.href = link.href;
-      }
     }
   });
 }
@@ -776,21 +766,6 @@ function initEventModal() {
       modal.querySelector(".modal-cta")?.focus();
     }, 1000);
   }
-
-  // Cancel before Safari begins opening a new tab, then hide without moving
-  // focus in the source tab once the link activates.
-  document
-    .querySelectorAll('a[href^="https://partiful.com/e/"]')
-    .forEach((link) => {
-      link.addEventListener("pointerdown", cancelPendingOpen);
-      link.addEventListener("click", () => closeModal({ restoreFocus: false }));
-    });
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      closeModal({ restoreFocus: false });
-    }
-  });
 
   // Event listeners
   if (closeBtn) {
