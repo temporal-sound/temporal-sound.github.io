@@ -9,6 +9,30 @@ document.documentElement.classList.add("js-on");
 // =====================================================================
 const SHOWS = [
   {
+    id: "just-emma-2026",
+    title: "Just Emma",
+    titleLong: "Temporal Presents: Just Emma",
+    startISO: "2026-09-26T20:00:00-07:00",
+    endISO: "2026-09-27T04:00:00-07:00",
+    dateLabel: "Sep 26, 2026",
+    dateShort: "Sat Sep 26, 8pm–4am",
+    timeLabel: "8pm–4am",
+    location: "Secret location · Portland",
+    flyer: "img/just-emma.jpg",
+    flyerAlt:
+      "Temporal Presents: Just Emma with Tyrus and Tarbouch Soundsystem — Saturday, September 26 at 8pm in Portland",
+    flyerFit: "contain",
+    pastImage: "img/just-emma.jpg",
+    pastLineup: "Just Emma · Tyrus · Tarbouch Soundsystem",
+    partifulUrl: "https://partiful.com/e/RJJt30kPEbTTuusebF3L",
+    archiveUrl: null,
+    blurb:
+      "Berlin duo Just Emma bring their dark, playful and melancholic sound back to Portland, with support from Tyrus and Tarbouch Soundsystem.",
+    modalBlurb:
+      "As summer melts into autumn, Just Emma return to guide us deep into the night. The Berlin-based duo behind Underyourskin and Trippin Tigers are joined by Tyrus and Tarbouch Soundsystem.",
+    tags: ["$30 per person", "130 cap", "RSVP required"],
+  },
+  {
     id: "temporal-on-the-beach-2026",
     title: "Temporal on the Beach",
     titleLong: "Temporal on the Beach",
@@ -97,6 +121,8 @@ const SHOWS = [
   },
 ];
 
+const EVENT_TIME_ZONE = "America/Los_Angeles";
+
 function getFeaturedAndPast() {
   const now = Date.now();
   const upcoming = SHOWS.filter(
@@ -122,6 +148,7 @@ function formatTimeOfDay(date) {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
+    timeZone: EVENT_TIME_ZONE,
   })
     .format(date)
     .replace(/:00\s/, "")
@@ -175,7 +202,10 @@ function renderFeaturedCard(show, isUpcoming) {
   const meta = article.querySelector(".event-featured-meta");
   if (meta) {
     const d = new Date(show.startISO);
-    const day = new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(d);
+    const day = new Intl.DateTimeFormat("en-US", {
+      weekday: "short",
+      timeZone: EVENT_TIME_ZONE,
+    }).format(d);
     const time = show.timeLabel || formatTimeOfDay(d);
     const parts = [day, time, show.location].filter(Boolean);
     meta.innerHTML = parts.join(' <span class="sep">·</span> ');
@@ -289,9 +319,18 @@ function renderTicker(show) {
   );
 
   const d = new Date(show.startISO);
-  const day = new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(d);
-  const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(d);
-  const dayNum = d.getDate();
+  const day = new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    timeZone: EVENT_TIME_ZONE,
+  }).format(d);
+  const month = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    timeZone: EVENT_TIME_ZONE,
+  }).format(d);
+  const dayNum = new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    timeZone: EVENT_TIME_ZONE,
+  }).format(d);
   const time = formatTimeOfDay(d);
   const dateText = show.dateShort || `${day} ${month} ${dayNum}, ${time}`;
 
@@ -349,9 +388,18 @@ function renderModal(show, isUpcoming) {
     const d = new Date(show.startISO);
     const weekday = new Intl.DateTimeFormat("en-US", {
       weekday: "long",
+      timeZone: EVENT_TIME_ZONE,
     }).format(d);
-    const month = new Intl.DateTimeFormat("en-US", { month: "long" }).format(d);
-    const dayNum = d.getDate();
+    const month = new Intl.DateTimeFormat("en-US", {
+      month: "long",
+      timeZone: EVENT_TIME_ZONE,
+    }).format(d);
+    const dayNum = Number(
+      new Intl.DateTimeFormat("en-US", {
+        day: "numeric",
+        timeZone: EVENT_TIME_ZONE,
+      }).format(d)
+    );
     const ord = ((n) => {
       if (n >= 11 && n <= 13) return "th";
       switch (n % 10) {
@@ -367,6 +415,7 @@ function renderModal(show, isUpcoming) {
         hour: "numeric",
         minute: "2-digit",
         hour12: true,
+        timeZone: EVENT_TIME_ZONE,
       })
         .format(d)
         .replace(" ", "")

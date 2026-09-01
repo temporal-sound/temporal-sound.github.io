@@ -970,7 +970,7 @@ form .btn-block {
 
 .past-strip-track {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 12px;
     overflow-x: auto;
     padding: 4px 4px 12px;
@@ -980,12 +980,6 @@ form .btn-block {
 
 .past-strip-track::-webkit-scrollbar {
     display: none;
-}
-
-@media (max-width: 560px) {
-    .past-strip-track {
-        justify-content: flex-start;
-    }
 }
 
 .past-card {
