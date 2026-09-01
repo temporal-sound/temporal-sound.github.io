@@ -2345,7 +2345,7 @@ a.event-card:hover .event-card-image img:not(.event-card-mark) {
     filter: brightness(0) invert(1);
 }
 
-/* Color variants for placeholder images (rotate per series feel) */
+/* Branded art for documented events whose original flyer is not in the repository. */
 .event-card-image-1 {
     background: linear-gradient(135deg,
         color-mix(in srgb, var(--terracotta) 60%, var(--night)) 0%,
@@ -2375,6 +2375,39 @@ a.event-card:hover .event-card-image img:not(.event-card-mark) {
     background: linear-gradient(135deg,
         color-mix(in srgb, var(--terracotta) 45%, var(--night)) 0%,
         color-mix(in srgb, var(--lavender) 35%, var(--night)) 100%);
+}
+
+.event-card-art {
+    position: relative;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px;
+    isolation: isolate;
+}
+
+.event-card-art::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid color-mix(in srgb, white 22%, transparent);
+    border-radius: calc(var(--r-lg) - 6px);
+    pointer-events: none;
+}
+
+.event-card-art .event-card-mark {
+    width: 34%;
+    opacity: 0.52;
+}
+
+.event-card-art-label {
+    color: var(--stone);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: var(--weight-semibold);
+    line-height: 0.95;
+    letter-spacing: var(--tracking-tight);
+    text-align: center;
+    text-wrap: balance;
 }
 
 .event-card-body {
