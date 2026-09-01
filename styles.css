@@ -127,18 +127,17 @@ h1, h2, h3, h4, .section-title, .join-heading, .event-featured-title,
 }
 
 /* ============================================================
-   Scroll-triggered reveal — sections fade up as they enter
+   Scroll-triggered reveal — content stays visible if the observer
+   is delayed or unavailable; only the slide motion is progressive.
    ============================================================ */
 .js-on .reveal {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(18px);
-    transition: opacity 0.85s var(--ease-out-quart),
-                transform 0.85s var(--ease-out-quart);
-    will-change: opacity, transform;
+    transition: transform 0.85s var(--ease-out-quart);
+    will-change: transform;
 }
 
 .js-on .reveal.in-view {
-    opacity: 1;
     transform: none;
 }
 
