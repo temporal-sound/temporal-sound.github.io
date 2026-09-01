@@ -122,31 +122,8 @@ p, li, .blurb, .home-tagline, .pull-quote {
 }
 
 h1, h2, h3, h4, .section-title, .join-heading, .event-featured-title,
-.modal-event-title, .past-card-title {
+.past-card-title {
     text-wrap: balance;
-}
-
-/* ============================================================
-   Scroll-triggered reveal — content stays visible if the observer
-   is delayed or unavailable; only the slide motion is progressive.
-   ============================================================ */
-.js-on .reveal {
-    opacity: 1;
-    transform: translateY(18px);
-    transition: transform 0.85s var(--ease-out-quart);
-    will-change: transform;
-}
-
-.js-on .reveal.in-view {
-    transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .js-on .reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
 }
 
 /* ============================================================
@@ -158,129 +135,70 @@ h1, h2, h3, h4, .section-title, .join-heading, .event-featured-title,
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
+    background:
+        radial-gradient(circle at 8% 2%, rgb(194 181 233 / 22%), transparent 42%),
+        radial-gradient(circle at 92% 96%, rgb(208 134 57 / 24%), transparent 38%),
+        radial-gradient(circle at 50% 45%, rgb(209 112 64 / 16%), transparent 34%),
+        radial-gradient(circle at 20% 78%, rgb(103 125 80 / 15%), transparent 30%);
+    contain: strict;
 }
 
-/* Slow rotating cosmic halo — subtle conic gradient */
-.ambient-halo {
+/* Two modest gradient sprites provide movement without animated filters or paint loops. */
+.ambient::before,
+.ambient::after {
+    content: "";
     position: absolute;
-    width: 200vmax;
-    height: 200vmax;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) translateZ(0);
-    background: conic-gradient(from 0deg,
-        transparent 0deg,
-        color-mix(in srgb, var(--lavender) 10%, transparent) 80deg,
-        transparent 160deg,
-        color-mix(in srgb, var(--ocher) 10%, transparent) 220deg,
-        transparent 300deg,
-        color-mix(in srgb, var(--terracotta) 8%, transparent) 340deg,
-        transparent 360deg);
-    filter: blur(180px);
-    opacity: 0.35;
-    animation: halo-rotate 60s linear infinite;
+    width: 48vmax;
+    aspect-ratio: 1;
+    border-radius: 50%;
     will-change: transform;
 }
 
-@keyframes halo-rotate {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to   { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-.blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(160px);
-    transform: translateZ(0);
-    will-change: transform, opacity;
-}
-
-.blob-lavender {
-    width: 65vmax;
-    height: 65vmax;
-    background: var(--lavender);
-    opacity: 0.22;
+.ambient::before {
     top: -18vmax;
-    left: -15vmax;
-    animation: drift-a 18s ease-in-out infinite alternate, breathe 7s ease-in-out infinite;
+    left: -16vmax;
+    background: radial-gradient(circle, rgb(194 181 233 / 16%) 0%, transparent 68%);
+    animation: ambient-drift-lavender 28s ease-in-out infinite alternate;
 }
 
-.blob-ocher {
-    width: 50vmax;
-    height: 50vmax;
-    background: var(--ocher);
-    opacity: 0.24;
-    bottom: -12vmax;
-    right: -8vmax;
-    animation: drift-b 22s ease-in-out infinite alternate, breathe 9s ease-in-out infinite -2s;
+.ambient::after {
+    right: -16vmax;
+    bottom: -20vmax;
+    background: radial-gradient(circle, rgb(208 134 57 / 18%) 0%, transparent 68%);
+    animation: ambient-drift-ocher 34s ease-in-out infinite alternate;
 }
 
-.blob-terracotta {
-    width: 42vmax;
-    height: 42vmax;
-    background: var(--terracotta);
-    opacity: 0.16;
-    top: 42%;
-    left: 48%;
-    transform: translate(-50%, -50%);
-    animation: drift-c 26s ease-in-out infinite alternate, breathe 11s ease-in-out infinite -5s;
+@keyframes ambient-drift-lavender {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(14vmax, 10vmax, 0) scale(1.08); }
 }
 
-.blob-grass {
-    width: 35vmax;
-    height: 35vmax;
-    background: var(--grass);
-    opacity: 0.15;
-    bottom: 18vmax;
-    left: 12vmax;
-    animation: drift-d 30s ease-in-out infinite alternate, breathe 13s ease-in-out infinite -8s;
+@keyframes ambient-drift-ocher {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(-12vmax, -9vmax, 0) scale(1.1); }
 }
 
-@keyframes drift-a {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(20vmax, 14vmax) scale(1.2); }
+/* CSS-only entrance motion. Content remains fully opaque throughout. */
+.home .reveal {
+    animation: section-settle 0.9s var(--ease-out-quart) both;
 }
 
-@keyframes drift-b {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(-18vmax, -18vmax) scale(1.25); }
-}
+.home .events { animation-delay: 70ms; }
+.home .sounds { animation-delay: 140ms; }
+.home .about { animation-delay: 210ms; }
+.home .join-section { animation-delay: 280ms; }
 
-@keyframes drift-c {
-    from { transform: translate(-50%, -50%) scale(1); }
-    to   { transform: translate(-15%, -85%) scale(1.35); }
-}
-
-@keyframes drift-d {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(16vmax, -12vmax) scale(1.3); }
-}
-
-@keyframes breathe {
-    0%, 100% { filter: blur(160px) saturate(1) brightness(1); }
-    50%      { filter: blur(190px) saturate(1.3) brightness(1.2); }
-}
-
-/* Animated film grain — canvas with brand-colored shimmer particles */
-.noise-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    opacity: 0.32;
-    mix-blend-mode: screen;
+@keyframes section-settle {
+    from { transform: translateY(14px); }
+    to { transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .noise-canvas {
-        opacity: 0.18;
+    .ambient::before,
+    .ambient::after,
+    .home .reveal {
+        animation: none;
     }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .blob,
-    .ambient-halo { animation: none; }
 }
 
 /* ============================================================
@@ -722,6 +640,15 @@ form .btn-block {
     border: 1px solid color-mix(in srgb, var(--ocher) 32%, transparent);
     box-shadow: 0 30px 80px -28px color-mix(in srgb, var(--terracotta) 55%, transparent);
     overflow: hidden;
+    transition: transform 0.35s var(--ease-out-quart),
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.event-featured:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--ocher) 46%, transparent);
+    box-shadow: 0 36px 86px -28px color-mix(in srgb, var(--terracotta) 65%, transparent);
 }
 
 .event-featured::before {
@@ -1761,262 +1688,6 @@ footer .sep {
         bottom: 22px;
         width: 52px;
         height: 52px;
-    }
-}
-
-/* ============================================================
-   Modal
-   ============================================================ */
-.modal {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.modal.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(14, 19, 30, 0.78);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    cursor: pointer;
-}
-
-.modal-content {
-    position: relative;
-    background:
-        radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--ocher) 18%, transparent) 0%, transparent 55%),
-        linear-gradient(160deg, var(--night-2) 0%, var(--night) 100%);
-    border: 1px solid color-mix(in srgb, var(--ocher) 32%, transparent);
-    border-radius: var(--r-xl);
-    max-width: 480px;
-    width: 90vw;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow:
-        0 40px 80px -20px rgba(0, 0, 0, 0.6),
-        0 0 100px -20px color-mix(in srgb, var(--terracotta) 36%, transparent);
-    transform: scale(0.96) translateY(16px);
-    transition: transform 0.4s var(--ease-out-expo);
-}
-
-.modal.show .modal-content {
-    transform: scale(1) translateY(0);
-}
-
-.modal-body {
-    padding: 28px;
-    text-align: center;
-}
-
-.modal-flyer {
-    display: block;
-    width: 100%;
-    margin: 0;
-    border-top-left-radius: var(--r-xl);
-    border-top-right-radius: var(--r-xl);
-    overflow: hidden;
-    background: color-mix(in srgb, var(--night) 80%, transparent);
-    aspect-ratio: 4 / 5;
-    max-height: 50vh;
-    transition: opacity 0.2s ease;
-}
-
-.modal-flyer:hover {
-    opacity: 0.96;
-}
-
-.modal-flyer img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.modal-eyebrow {
-    margin: 0 0 16px;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wider);
-    font-size: var(--text-micro);
-    color: var(--ocher);
-    font-weight: var(--weight-semibold);
-}
-
-.modal-event-title {
-    font-family: var(--font-display);
-    font-weight: var(--weight-semibold);
-    font-size: var(--text-xl);
-    line-height: var(--leading-tight);
-    color: var(--stone);
-    margin: 0 0 10px;
-    letter-spacing: var(--tracking-tight);
-}
-
-.modal-event-date {
-    font-size: var(--text-sm);
-    color: var(--ocher);
-    font-weight: var(--weight-medium);
-    margin: 0 0 16px;
-    line-height: var(--leading-snug);
-}
-
-.modal-event-date .sep {
-    opacity: 0.6;
-    margin: 0 0.4em;
-}
-
-.modal-event-description {
-    font-size: var(--text-base);
-    color: color-mix(in srgb, var(--stone) 82%, transparent);
-    line-height: var(--leading-normal);
-    margin: 0 0 24px;
-}
-
-.modal-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-}
-
-.modal-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 14px 20px;
-    border-radius: var(--r-md);
-    background: linear-gradient(135deg, var(--ocher) 0%, var(--terracotta) 100%);
-    color: var(--night);
-    text-decoration: none;
-    font-weight: 600;
-    transition: transform 0.15s ease, filter 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 8px 24px -8px color-mix(in srgb, var(--terracotta) 60%, transparent);
-}
-
-.modal-cta:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.06);
-    box-shadow: 0 14px 30px -8px color-mix(in srgb, var(--terracotta) 75%, transparent);
-}
-
-.modal-dismiss {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 12px 20px;
-    border-radius: var(--r-md);
-    border: 1px solid color-mix(in srgb, var(--stone) 26%, transparent);
-    background: transparent;
-    color: color-mix(in srgb, var(--stone) 72%, transparent);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.modal-dismiss:hover {
-    background: color-mix(in srgb, var(--stone) 8%, transparent);
-    color: var(--stone);
-    border-color: color-mix(in srgb, var(--stone) 45%, transparent);
-}
-
-.modal-close {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border: 1px solid color-mix(in srgb, var(--stone) 18%, transparent);
-    background: color-mix(in srgb, var(--night) 70%, transparent);
-    color: var(--stone);
-    cursor: pointer;
-    border-radius: 50%;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    transition: background 0.2s var(--ease-out-quart),
-                border-color 0.2s var(--ease-out-quart),
-                transform 0.15s var(--ease-out-quart);
-}
-
-.modal-close:hover {
-    background: var(--ocher);
-    border-color: var(--ocher);
-    color: var(--night);
-    transform: scale(1.06);
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px 24px 16px;
-    border-bottom: 1px solid color-mix(in srgb, var(--stone) 15%, transparent);
-}
-
-.modal-title {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 20px;
-    color: var(--lavender);
-    margin: 0;
-}
-
-@media (max-width: 640px) {
-    .modal-content {
-        width: calc(100% - 24px);
-        max-width: 460px;
-        max-height: calc(100dvh - 24px);
-    }
-
-    .modal-flyer {
-        aspect-ratio: 4 / 5;
-        max-height: none;
-    }
-
-    /* Container aspect matches the 4:5 image — no crop, no bars */
-    .modal-flyer img {
-        object-fit: cover;
-    }
-
-    .modal-body {
-        padding: 22px 22px 0;
-    }
-
-    .modal-event-description {
-        font-size: var(--text-sm);
-        margin-bottom: 0;
-    }
-
-    /* Keep RSVP above the fold on mobile — sticks to bottom of
-       modal-content scroll viewport so it's visible regardless of
-       flyer height or Safari URL bar state. */
-    .modal-actions {
-        position: sticky;
-        bottom: 0;
-        margin: 20px -22px 0;
-        padding: 22px;
-        background: linear-gradient(
-            to bottom,
-            transparent 0%,
-            color-mix(in srgb, var(--night) 70%, transparent) 35%,
-            var(--night) 75%
-        );
     }
 }
 

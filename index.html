@@ -39,19 +39,12 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2026090102">
+    <link rel="stylesheet" href="styles.css?v=2026090104">
 </head>
 
 <body class="home">
-    <!-- Ambient backdrop: rotating cosmic halo + drifting color blobs + animated film grain -->
-    <div class="ambient" aria-hidden="true">
-        <div class="ambient-halo"></div>
-        <span class="blob blob-lavender"></span>
-        <span class="blob blob-ocher"></span>
-        <span class="blob blob-terracotta"></span>
-        <span class="blob blob-grass"></span>
-        <canvas class="noise-canvas" id="noiseCanvas"></canvas>
-    </div>
+    <!-- Static ambient backdrop -->
+    <div class="ambient" aria-hidden="true"></div>
 
     <!-- Sticky live ticker: pulse + continuously scrolling show info + brand tags -->
     <a class="ann-bar" id="annBar" href="https://partiful.com/e/RJJt30kPEbTTuusebF3L" target="_blank" rel="noopener"
@@ -203,7 +196,7 @@
                     <div class="past-strip">
                         <div class="past-strip-head">
                             <p class="past-strip-label">Past shows</p>
-                            <a class="past-strip-link" href="events/">See all <span aria-hidden="true">→</span></a>
+                            <a class="past-strip-link" href="/events/">See all <span aria-hidden="true">→</span></a>
                         </div>
                         <div class="past-strip-track">
                             <a class="past-card" href="https://partiful.com/e/mvmLPqtElsUuZCi4ZElw" target="_blank"
@@ -431,39 +424,6 @@
         </div>
     </div>
 
-    <!-- Event Modal -->
-    <div id="eventModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
-            <button class="modal-close" type="button" aria-label="Close">
-                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                    <path d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" />
-                </svg>
-            </button>
-            <a class="modal-flyer" href="https://partiful.com/e/RJJt30kPEbTTuusebF3L" target="_blank"
-                rel="noopener" aria-label="RSVP for Just Emma on Partiful">
-                <img src="img/just-emma.jpg"
-                    alt="Temporal Presents: Just Emma with Tyrus and Tarbouch Soundsystem — Saturday, September 26 at 8pm in Portland"
-                    style="object-fit: contain" />
-            </a>
-            <div class="modal-body">
-                <p class="modal-eyebrow">Save the date ✦</p>
-                <p class="modal-event-title" id="modalTitle">Temporal Presents: Just Emma</p>
-                <p class="modal-event-date">Saturday, September 26th <span class="sep">·</span> 8pm–4am <span
-                        class="sep">·</span> Secret location · Portland</p>
-                <p class="modal-event-description">
-                    As summer melts into autumn, Just Emma return to guide us deep into the night. The Berlin-based
-                    duo behind Underyourskin and Trippin Tigers are joined by Tyrus and Tarbouch Soundsystem.
-                </p>
-                <div class="modal-actions">
-                    <a href="https://partiful.com/e/RJJt30kPEbTTuusebF3L" target="_blank" rel="noopener"
-                        class="modal-cta">RSVP on Partiful</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Floating Action Button -->
     <button class="fab" id="fab" aria-label="Jump to the join form" title="Get on the list">
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
@@ -472,7 +432,7 @@
         </svg>
     </button>
 
-    <script src="script.js?v=2026090101"></script>
+    <script src="script.js?v=2026090103"></script>
 </body>
 
 </html>
