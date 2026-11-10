@@ -196,7 +196,43 @@ if (againBtn) {
   });
 }
 
-// Event details and RSVP live in the page; there is no timed modal.
+// Reuse the featured event and countdown deadline so the popup cannot drift
+// out of sync with the homepage. Native dialog handles focus and Escape.
+function initEventModal() {
+  const modal = document.getElementById("eventModal");
+  const featured = document.querySelector(".event-featured");
+  const countdown = document.querySelector(".ann-bar-countdown");
+  const endTime = Date.parse(countdown?.dataset.eventEnd);
+  if (!modal || !featured || !Number.isFinite(endTime) || Date.now() >= endTime) return;
+
+  const event = featured.cloneNode(true);
+  event.querySelector(".event-featured-title").id = "eventModalTitle";
+  modal.appendChild(event);
+
+  modal.querySelector(".event-modal-close").addEventListener("click", () => modal.close());
+  modal.addEventListener("click", (e) => {
+    const bounds = modal.getBoundingClientRect();
+    if (e.target === modal && (
+      e.clientX < bounds.left || e.clientX > bounds.right ||
+      e.clientY < bounds.top || e.clientY > bounds.bottom
+    )) modal.close();
+  });
+
+  const openTimer = setTimeout(() => {
+    if (document.visibilityState === "visible" && Date.now() < endTime && !modal.open) {
+      modal.showModal();
+    }
+  }, 1000);
+
+  // Let a visitor follow a link immediately without a delayed popup taking focus.
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("a[href]")) clearTimeout(openTimer);
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) clearTimeout(openTimer);
+  });
+  window.addEventListener("pagehide", () => clearTimeout(openTimer));
+}
 
 // Sticky announcement bar with live countdown to the next show
 function initAnnouncementBar() {
@@ -252,6 +288,8 @@ function initAnnouncementBar() {
 
 // Initialize Swiper gallery when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
+  initEventModal();
+
   // Sticky announcement bar countdown
   initAnnouncementBar();
 

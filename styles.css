@@ -1691,6 +1691,83 @@ footer .sep {
     }
 }
 
+/* Event popup: native dialog keeps focus and dismissal in the browser. */
+.event-modal {
+    width: min(720px, calc(100vw - 32px));
+    max-height: calc(100dvh - 32px);
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--ocher) 32%, transparent);
+    border-radius: var(--r-xl);
+    background: var(--night-2);
+    color: var(--stone);
+    overflow-y: auto;
+    box-shadow: 0 30px 80px -20px rgb(0 0 0 / 60%);
+}
+
+.event-modal::backdrop {
+    background: rgb(14 19 30 / 82%);
+}
+
+.event-modal .event-featured {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 20px;
+    max-width: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    transform: none;
+    transition: none;
+}
+
+.event-modal .event-featured-body {
+    padding: 48px 24px 24px 0;
+    gap: 8px;
+}
+
+.event-modal .event-featured-title {
+    font-size: var(--text-xl);
+}
+
+.event-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid color-mix(in srgb, var(--stone) 25%, transparent);
+    border-radius: 50%;
+    background: var(--night);
+    color: var(--stone);
+    cursor: pointer;
+}
+
+.event-modal-close:focus-visible {
+    outline: 2px solid var(--ocher);
+    outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+    .event-modal .event-featured {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .event-modal .event-featured-flyer {
+        height: min(30dvh, 240px);
+        max-height: none;
+        aspect-ratio: auto;
+    }
+
+    .event-modal .event-featured-body {
+        padding: 18px;
+        gap: 6px;
+    }
+}
+
 /* ============================================================
    /sonido/ page — preserved styles
    ============================================================ */
